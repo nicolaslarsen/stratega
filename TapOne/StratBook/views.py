@@ -1,5 +1,3 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
 from django.views import generic
 
 from .models import Map
@@ -16,4 +14,3 @@ class MapDetailView(generic.DetailView):
     model = Map
     template_name = 'StratBook/map_detail.html'
     context_object_name = 'm'
-

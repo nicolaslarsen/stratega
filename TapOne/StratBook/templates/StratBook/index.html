@@ -4,11 +4,20 @@
 
 {% block content %}
   {% if map_list %}
-    <ul>
+    <div class="col-8 ml-auto">
     {% for m in map_list %}
-      <li><a href={% url 'StratBook:maps' m.id %}>{{ m.name }}</a></li>
+    	<div class="col-6">
+	      <a class="card-link" href={% url 'StratBook:maps' m.id %}>
+	      	<img src="{{ STATIC_URL }}{{ m.name }}.png">
+	      	<div class="card">
+	      		<div class="card-body">
+	      			<p class="card-text">{{ m.name }}</p>
+	      		</div>
+	      	</div>
+	    	</a>
+	    </div>
     {% endfor %}
-    </ul>
+  	</div>
   {% else %}
     <p>No maps available.</p>
   {% endif %}

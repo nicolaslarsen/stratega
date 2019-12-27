@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.views import generic
 from django.contrib.auth import login, authenticate
+from django.contrib import messages
 from .forms import SignUpForm
 
 def index(request):
@@ -15,7 +16,9 @@ def signup(request):
         password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=password)
         login(request, user)
+        messages.success(request, "Your account was created successfully")
         return redirect('/')
     else:
-        form = SignUpForm()
+        if (request.POST):
+            messages.error(request, "Account creation was unsuccessful")
     return render(request, 'registration/signup.html', {'form': form})

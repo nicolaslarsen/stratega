@@ -1,0 +1,11 @@
+{# #}
+{% if error_message %}
+  <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+<h1>{{ m.name }}</h1>
+<ul>
+{% for strat in m.strategy_set.all %}
+<li>{{ strat.name }}</li>
+{% endfor %}
+</ul>
+

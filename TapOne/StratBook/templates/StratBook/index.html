@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}TapOne Map Overview{% endblock %}
+
+{% block content %}
+  {% if map_list %}
+    <ul>
+    {% for m in map_list %}
+      <li><a href={% url 'StratBook:maps' m.id %}>{{ m.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No maps available.</p>
+  {% endif %}
+{% endblock %}

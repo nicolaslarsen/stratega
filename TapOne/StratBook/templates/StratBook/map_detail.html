@@ -1,11 +1,37 @@
-{# #}
-{% if error_message %}
-  <p><strong>{{ error_message }}</strong></p>
+{% extends "base.html" %}
+
+{% block title %}{{m.name}} Strats{% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+  <div class="col-6">
+    <div class="card border-primary bg-light">
+      <div class="card-body">
+        <h3 class="card-title">CT</h3>
+        <p class="card-text">
+          {% for strat in m.get_ct_strategies %}
+            {% include "StratBook/strat_card.html" %}
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card border-danger bg-light">
+      <div class="card-body">
+        <h3 class="card-title">T</h3>
+        <p class="card-text">
+          {% for strat in m.get_t_strategies %}
+            {% include "StratBook/strat_card.html" %}
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% if perms.StratBook.add_strategy %}
+  <a href={% url 'StratBook:add_strat' %} class="btn btn-success">+ Add Strategy</a>
 {% endif %}
-<h1>{{ m.name }}</h1>
-<ul>
-{% for strat in m.strategy_set.all %}
-<li>{{ strat.name }}</li>
-{% endfor %}
-</ul>
+{% endblock %}
 

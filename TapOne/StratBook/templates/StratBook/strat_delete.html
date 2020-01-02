@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Delete: {{strat.name}}{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete "{{ strat.name }}"?</p>
+    <input type="submit" value="Delete" class="btn btn-danger mt-2"></input>
+
+  </form>
+{% endblock %}

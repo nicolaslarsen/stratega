@@ -1,24 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}TapOne Map Overview{% endblock %}
+{% block title %}Map Overview{% endblock %}
 
+{% load static %}
 {% block content %}
-  {% if map_list %}
-    <div class="col-8 ml-auto">
-    {% for m in map_list %}
-    	<div class="col-6">
-	      <a class="card-link" href={% url 'StratBook:maps' m.id %}>
-	      	<img src="{{ STATIC_URL }}{{ m.name }}.png">
-	      	<div class="card">
-	      		<div class="card-body">
-	      			<p class="card-text">{{ m.name }}</p>
-	      		</div>
-	      	</div>
-	    	</a>
-	    </div>
-    {% endfor %}
-  	</div>
+  {% if perms.StratBook.view_map %}
+    {% if map_list %}
+      <div class="row mb-4">
+      {% for m in map_list %}
+      {% if forloop.counter|divisibleby:5 %}
+        <div class="row mb-4">
+      {% endif %}
+    	    <div class="col-sm-3">
+	          <a class="card-link" href={% url 'StratBook:maps' m.id %}>
+	      	    <div class="card">
+                {% with 'StratBook/images/'|add:m.name|add:'.jpg' as image_static %}
+                <img src={% static image_static %} class="card-img-top">
+                {% endwith %}
+	      		    <div class="card-body">
+	      			    <p class="card-text">{{ m.name }}</p>
+	      		    </div>
+	      	    </div>
+	    	    </a>
+	        </div>
+        {% if forloop.counter|divisibleby:4 or forloop.counter == map_list|length %}
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <p>No maps available.</p>
+    {% endif %}
   {% else %}
-    <p>No maps available.</p>
+    <p>Your user does not have access to any maps</p>
   {% endif %}
+  {% if perms.StratBook.edit_map %}
+    <a href={% url 'StratBook:add_map' %} class="btn btn-success">+ Add Map</a>
+  {% endif %}
+
 {% endblock %}

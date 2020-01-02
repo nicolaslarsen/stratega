@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{strat.name}}{% endblock %}
+
+{% block content %}
+<div class="card bg-light"> 
+  <div class="card-body">
+    <h1 class="card-title">{{strat.name}}</h1>
+    <hr>
+    <p class="card-text">
+      <div class="desc">{{strat.description}}</div>
+      <hr>
+      <p class="team">Side: {{strat.team}}</p>
+      <p class="date text-muted">Date added: {{strat.added_date}}</p>
+    </p>
+  </div>
+</div>
+{% if perms.StratBook.edit_strategy %}
+    <a class="btn btn-primary mt-4" href={% url 'StratBook:update_strat' strat.id %}>Edit</a>
+{% endif %}
+{% if perms.StratBook.delete_strategy %}
+    <a class="btn btn-danger mt-4" href={% url 'StratBook:delete_strat' strat.id %}>Delete</a>
+{% endif %}
+{% endblock %}

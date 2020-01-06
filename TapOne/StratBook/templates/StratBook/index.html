@@ -28,7 +28,30 @@
         {% endif %}
       {% endfor %}
     {% else %}
-      <p>No maps available.</p>
+      <p>No active maps available.</p>
+    {% endif %}
+    {% if inactive_map_list %}
+      <div class="row mb-4">
+      {% for m in inactive_map_list %}
+      {% if forloop.counter|divisibleby:5 %}
+        <div class="row mb-4">
+      {% endif %}
+    	    <div class="col-sm-3">
+	          <a class="card-link" href={% url 'StratBook:maps' m.id %}>
+	      	    <div class="card">
+                {% with 'StratBook/images/'|add:m.name|add:'.jpg' as image_static %}
+                <img src={% static image_static %} class="card-img-top">
+                {% endwith %}
+	      		    <div class="card-body">
+	      			    <p class="card-text">{{ m.name }}</p>
+	      		    </div>
+	      	    </div>
+	    	    </a>
+	        </div>
+        {% if forloop.counter|divisibleby:4 or forloop.counter == map_list|length %}
+        </div>
+        {% endif %}
+      {% endfor %}
     {% endif %}
   {% else %}
     <p>Your user does not have access to any maps</p>

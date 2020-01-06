@@ -16,7 +16,11 @@ class IndexView(generic.ListView):
     context_object_name = 'map_list'
 
     def get_queryset(self):
-        return Map.objects.order_by('name')
+        return Map.objects.filter(active_duty=True).order_by('name')
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['inactive_map_list'] = Map.objects.filter(active_duty=False).order_by('name')
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(permission_required('StratBook.view_map', raise_exception=True), name ='dispatch')

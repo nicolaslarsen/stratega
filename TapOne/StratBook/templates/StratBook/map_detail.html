@@ -8,7 +8,7 @@
   <div class="col-6">
     <div class="card border-primary bg-light">
       <div class="card-body">
-        <h3 class="card-title">CT</h3>
+        <h3 class="card-title text-primary">Counter Terrorist</h3>
         <p class="card-text">
           {% for strat in m.get_ct_strategies %}
             {% include "StratBook/strat_card.html" %}
@@ -20,7 +20,7 @@
   <div class="col-6">
     <div class="card border-danger bg-light">
       <div class="card-body">
-        <h3 class="card-title">T</h3>
+        <h3 class="card-title text-danger">Terrorist</h3>
         <p class="card-text">
           {% for strat in m.get_t_strategies %}
             {% include "StratBook/strat_card.html" %}

@@ -25,7 +25,7 @@ SECRET_KEY = 'rh@2629fyes0wvgw9b8z5cb&x%gr$n*+o=%$+j58u76m0*cl45'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.0.132', '.tapone.ga', 'localhost']
 
 
 # Application definition

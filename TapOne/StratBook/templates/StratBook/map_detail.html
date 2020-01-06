@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{m.name}} Strats{% endblock %}
+{% block title %}{{map.name}} Strats{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
       <div class="card-body">
         <h3 class="card-title text-primary">Counter Terrorist</h3>
         <p class="card-text">
-          {% for strat in m.get_ct_strategies %}
+          {% for strat in map.get_ct_strategies %}
             {% include "StratBook/strat_card.html" %}
           {% endfor %}
         </p>
@@ -22,7 +22,7 @@
       <div class="card-body">
         <h3 class="card-title text-danger">Terrorist</h3>
         <p class="card-text">
-          {% for strat in m.get_t_strategies %}
+          {% for strat in map.get_t_strategies %}
             {% include "StratBook/strat_card.html" %}
           {% endfor %}
         </p>
@@ -32,6 +32,7 @@
 </div>
 {% if perms.StratBook.add_strategy %}
   <a href={% url 'StratBook:add_strat' %} class="btn btn-success">+ Add Strategy</a>
+  <a href={% url 'StratBook:delete_map' map.id %} class="btn btn-danger">- Delete Map</a>
 {% endif %}
 {% endblock %}
 

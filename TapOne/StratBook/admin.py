@@ -5,7 +5,7 @@ from .models import Map, Strategy
 
 class MapAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Map Name', {'fields': ['name']}),
+        ('Map Name', {'fields': ['name', 'active_duty']}),
     ]
     list_display = ['name']
 

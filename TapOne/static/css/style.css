@@ -31,3 +31,7 @@ div.success{
   font-size: 1rem;
   color: red;
 }
+
+textarea{
+	width: 50%;
+}

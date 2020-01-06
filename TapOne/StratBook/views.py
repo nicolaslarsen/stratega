@@ -2,6 +2,7 @@ from django.views import generic
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 from django import template
 from .forms import MapForm, StratForm
 from django.urls import reverse
@@ -21,13 +22,14 @@ class IndexView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context['inactive_map_list'] = Map.objects.filter(active_duty=False).order_by('name')
+        return context
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(permission_required('StratBook.view_map', raise_exception=True), name ='dispatch')
 class MapDetailView(generic.DetailView):
     model = Map
     template_name = 'StratBook/map_detail.html'
-    context_object_name = 'm'
+    context_object_name = 'map'
 
 
 @method_decorator(login_required, name='dispatch')
@@ -40,19 +42,30 @@ class StrategyDetailView(generic.DetailView):
 @method_decorator(login_required, name='dispatch')
 @method_decorator(permission_required('StratBook.add_map', raise_exception=True), name ='dispatch')
 class CreateMapView(generic.FormView):
-    template_name = 'StratBook/add_map.html'
     form_class = MapForm
+    template_name = 'StratBook/map_add.html'
+    success_url = '/stratbook/'
+
+    def form_valid(self, form):
+        _map = form.save()
+        return HttpResponseRedirect(reverse('StratBook:map', args=(_map.id,)))
+
+
+class DeleteMapView(generic.DeleteView):
+    model = Map
+    template_name = 'StratBook/map_delete.html'
+    context_object_name = 'map'
     success_url = '/stratbook/'
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(permission_required('StratBook.add_strategy', raise_exception=True), name ='dispatch')
 class CreateStratView(generic.FormView):
     form_class = StratForm
-    template_name = 'StratBook/add_strat.html'
+    template_name = 'StratBook/strat_add.html'
     success_url = '/stratbook/'
 
     def form_valid(self, form):
-        form.save() 
+        form.save()
         return super().form_valid(form)
 
 

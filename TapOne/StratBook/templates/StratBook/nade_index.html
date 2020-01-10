@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Map Overview - Stratbook{% endblock %}
+{% block title %}Map Overview - Nadebook{% endblock %}
 
 {% load static %}
 {% block content %}
@@ -18,7 +18,7 @@
         <div class="row mb-4">
       {% endif %}
     	    <div class="col-sm-3">
-	          <a class="card-link" href={% url 'StratBook:map' map.id %}>
+	          <a class="card-link" href={% url 'StratBook:nadeMap' map.id %}>
 	      	    <div class="card">
                 {% with 'StratBook/images/'|add:map.name|add:'.jpg' as image_static %}
                 <img src={% static image_static %} class="card-img-top">
@@ -47,7 +47,7 @@
           <div class="row mb-4">
         {% endif %}
       	    <div class="col-sm-3">
-  	          <a class="card-link" href={% url 'StratBook:map' map.id %}>
+  	          <a class="card-link" href={% url 'StratBook:nadeMap' map.id %}>
   	      	    <div class="card">
                   {% with 'StratBook/images/'|add:map.name|add:'.jpg' as image_static %}
                   <img src={% static image_static %} class="card-img-top">
@@ -75,5 +75,3 @@
   <script src={% static 'StratBook/js/index.js' %}>
   </script>
 {% endblock %}
-
-

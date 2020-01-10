@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}{{strat.name}}{% endblock %}
+{% block title %}Strat: {{strat.name}}{% endblock %}
 
 {% block content %}
-<div class="card bg-light"> 
+{% include 'StratBook/_mini_nav.html' %}
+<hr>
+<div class="card bg-light mt-4"> 
   <div class="card-body">
     <h1 class="card-title">{{strat.name}}</h1>
     <hr>

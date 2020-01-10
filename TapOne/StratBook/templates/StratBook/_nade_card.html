@@ -1,0 +1,8 @@
+<a class="card-link" href={% url 'StratBook:nade' nade.id %}>
+  <div class="card text-dark nade-card">
+    <img class="card-img-top" src="{{ nade.get_image_url }}">
+    <div class="card-body">
+      <p class="card-text">{{nade.name}}</p>
+    </div>
+  </div>
+</a>

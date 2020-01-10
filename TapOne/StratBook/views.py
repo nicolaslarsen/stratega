@@ -8,7 +8,7 @@ from .forms import MapForm, StratForm
 from django.urls import reverse
 
 
-from .models import Map, Strategy
+from .models import Map, Strategy, Nade
 
 # Create your views here.
 @method_decorator(login_required, name='dispatch')
@@ -31,7 +31,6 @@ class MapDetailView(generic.DetailView):
     template_name = 'StratBook/map_detail.html'
     context_object_name = 'map'
 
-
 @method_decorator(login_required, name='dispatch')
 @method_decorator(permission_required('StratBook.view_strategy', raise_exception=True), name ='dispatch')
 class StrategyDetailView(generic.DetailView):
@@ -51,6 +50,8 @@ class CreateMapView(generic.FormView):
         return HttpResponseRedirect(reverse('StratBook:map', args=(_map.id,)))
 
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(permission_required('StratBook.delete_map', raise_exception=True), name ='dispatch')
 class DeleteMapView(generic.DeleteView):
     model = Map
     template_name = 'StratBook/map_delete.html'
@@ -65,8 +66,14 @@ class CreateStratView(generic.FormView):
     success_url = '/stratbook/'
 
     def form_valid(self, form):
+        form.instance.map_name = get_object_or_404(Map, pk=self.kwargs['pk'])
         form.save()
-        return super().form_valid(form)
+        return HttpResponseRedirect(reverse('StratBook:map', args=(self.kwargs['pk'],)))
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateStratView, self).get_context_data(**kwargs)
+        context['map'] = get_object_or_404(Map, pk=self.kwargs['pk'])
+        return context
 
 
 @method_decorator(login_required, name='dispatch')
@@ -88,4 +95,35 @@ class DeleteStrat(generic.DeleteView):
     context_object_name = 'strat'
 
     def get_success_url(self):
-        return reverse('StratBook:maps', args=([self.object.map_name.id]))
+        return reverse('StratBook:map', args=([self.object.map_name.id]))
+
+@method_decorator(login_required, name='dispatch')
+class NadeIndexView(generic.ListView):
+    model = Map
+    template_name = 'StratBook/nade_index.html'
+    context_object_name = 'map_list'
+
+    def get_queryset(self):
+        return Map.objects.filter(active_duty=True).order_by('name')
+
+    def get_context_data(self, **kwargs):
+        context = super(NadeIndexView, self).get_context_data(**kwargs)
+        context['inactive_map_list'] = Map.objects.filter(active_duty=False).order_by('name')
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(permission_required('StratBook.view_map', raise_exception=True), name ='dispatch')
+class NadeMapDetailView(generic.DetailView):
+    model = Map
+    template_name = 'StratBook/map_detail_nade.html'
+    context_object_name = 'map'
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(permission_required('StratBook.view_nade', raise_exception=True), name ='dispatch')
+class NadeDetailView(generic.DetailView):
+    model = Nade
+    template_name = 'StratBook/nade_detail.html'
+    context_object_name = 'nade'
+
+

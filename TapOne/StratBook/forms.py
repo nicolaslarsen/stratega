@@ -10,11 +10,11 @@ class MapForm(forms.ModelForm):
     	fields = ('name', 'active_duty')
 
 class StratForm(forms.ModelForm):
-    map_name = forms.ModelChoiceField(queryset=Map.objects.all())
+    map_name = forms.ModelChoiceField(queryset=Map.objects.all(), required=False, widget=forms.HiddenInput())
     name = forms.CharField(max_length=200)
     description = forms.CharField(widget=forms.Textarea())
-    team = forms.ChoiceField(choices=[('CT', 'CT'), ('T', 'T')])
+    team = forms.ChoiceField(choices=Strategy.TEAM_CHOICES)
 
     class Meta:
         model = Strategy
-        fields = ('name', 'map_name', 'description', 'team')
+        fields = ('map_name', 'name', 'description', 'team')

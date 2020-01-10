@@ -3,15 +3,17 @@
 {% block title %}{{map.name}} Strats{% endblock %}
 
 {% block content %}
-
-<div class="row mb-4">
+{% include 'StratBook/_mini_nav.html' %}
+<hr>
+<h2>{{map.name}}</h2>
+<div class="row mb-4 mt-4">
   <div class="col-6">
     <div class="card border-primary bg-light">
       <div class="card-body">
-        <h3 class="card-title text-primary">Counter Terrorist</h3>
+        <h3 class="card-title text-primary">Counter-Terrorist</h3>
         <p class="card-text">
-          {% for strat in map.get_ct_strategies %}
-            {% include "StratBook/strat_card.html" %}
+          {% for strat in map.ct_strategies %}
+            {% include 'StratBook/_strat_card.html' %}
           {% endfor %}
         </p>
       </div>
@@ -22,16 +24,18 @@
       <div class="card-body">
         <h3 class="card-title text-danger">Terrorist</h3>
         <p class="card-text">
-          {% for strat in map.get_t_strategies %}
-            {% include "StratBook/strat_card.html" %}
+          {% for strat in map.t_strategies %}
+            {% include 'StratBook/_strat_card.html' %}
           {% endfor %}
         </p>
       </div>
     </div>
   </div>
 </div>
-{% if perms.StratBook.add_strategy %}
-  <a href={% url 'StratBook:add_strat' %} class="btn btn-success">+ Add Strategy</a>
+{% if perms.StratBook.add_map %}
+  <a href={% url 'StratBook:add_strat' map.id %} class="btn btn-success">+ Add Strategy</a>
+{% endif %}
+{% if perms.StratBook.delete_map %}
   <a href={% url 'StratBook:delete_map' map.id %} class="btn btn-danger">- Delete Map</a>
 {% endif %}
 {% endblock %}

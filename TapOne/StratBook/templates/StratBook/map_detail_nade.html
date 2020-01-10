@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}{{map.name}} Nades{% endblock %}
+
+{% block content %}
+{% include 'StratBook/_mini_nav_nade.html' %}
+<hr>
+
+{% if map.smokes %}
+<h2>Smokes</h2>
+<hr>
+<div class="row mb-4">
+  {% for nade in map.smokes %}
+  {% if forloop.counter|divisibleby:5 %}
+    <div class="row mb-4">
+  {% endif %}
+      <div class="col-sm-3">
+        {% include 'StratBook/_nade_card.html' %}
+      </div>
+  {% if forloop.counter|divisibleby:4 or forloop.counter == map.smokes|length %}
+    </div>
+  {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if map.molotovs %}
+<h2>Molotovs</h2>
+<hr>
+<div class="row mb-4">
+  {% for nade in map.molotovs %}
+  {% if forloop.counter|divisibleby:5 %}
+    <div class="row mb-4">
+  {% endif %}
+      <div class="col-sm-3">
+        {% include 'StratBook/_nade_card.html' %}
+      </div>
+  {% if forloop.counter|divisibleby:4 or forloop.counter == map.molotovs|length %}
+    </div>
+  {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if map.flashes %}
+<h2>Flashes</h2>
+<hr>
+<div class="row mb-4">
+  {% for nade in map.flashes %}
+  {% if forloop.counter|divisibleby:5 %}
+    <div class="row mb-4">
+  {% endif %}
+      <div class="col-sm-3">
+        {% include 'StratBook/_nade_card.html' %}
+      </div>
+  {% if forloop.counter|divisibleby:4 or forloop.counter == map.flashes|length %}
+    </div>
+  {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if map.HEs %}
+<h2>HE-grenades</h2>
+<hr>
+<div class="row mb-4">
+  {% for nade in map.HEs %}
+  {% if forloop.counter|divisibleby:5 %}
+    <div class="row mb-4">
+  {% endif %}
+      <div class="col-sm-3">
+        {% include 'StratBook/_nade_card.html' %}
+      </div>
+  {% if forloop.counter|divisibleby:4 or forloop.counter == map.HEs|length %}
+    </div>
+  {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if perms.StratBook.delete_map %}
+  <a href={% url 'StratBook:delete_map' map.id %} class="btn btn-danger">- Delete Map</a>
+{% endif %}
+{% endblock %}

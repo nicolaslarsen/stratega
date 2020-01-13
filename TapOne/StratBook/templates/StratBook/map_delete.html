@@ -9,6 +9,8 @@
   <p class="text-danger">Be aware that this will delete any attached strategies and leave nades hanging in the database</p>
   <form method="post">
     {% csrf_token %}
-    <input type="submit" value="Delete" class="btn btn-danger mt-2"></input>
+    <input type="submit" value="Delete" class="btn btn-danger mt-2">
+    <input type="button" value="No, take me back!" onclick="history.back()"
+    	class="btn btn-outline-primary bg-light mt-2">
   </form>
 {% endblock %}

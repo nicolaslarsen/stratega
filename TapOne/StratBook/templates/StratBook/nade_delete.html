@@ -9,5 +9,7 @@
   <form method="post">
     {% csrf_token %}
     <input type="submit" value="Delete" class="btn btn-danger mt-2"></input>
+    <input type="button" value="No, take me back!" onclick="history.back()"
+    	class="btn btn-outline-primary bg-light mt-2">
   </form>
 {% endblock %}

@@ -68,12 +68,12 @@ class Nade(models.Model):
 
     def type_text(self):
         for (t, name) in self.NADE_TYPE_CHOICES:
-            if self.nade_type == t: 
+            if self.nade_type == t:
                 return name
 
 class Bullet(models.Model):
-    text = models.CharField(max_length=200) 
+    text = models.CharField(max_length=200)
     strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
-    player = models.ForeignKey(get_user_model(), 
+    player = models.ForeignKey(get_user_model(),
             on_delete=models.SET_NULL, blank=True, null=True)
     nade = models.ForeignKey(Nade, on_delete=models.SET_NULL, blank=True, null=True)

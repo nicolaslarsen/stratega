@@ -9,13 +9,18 @@ class MapAdmin(admin.ModelAdmin):
     ]
     list_display = ['name']
 
+class BulletInline(admin.StackedInline):
+    model = Bullet
+    extra = 1
+
 class StrategyAdmin(admin.ModelAdmin):
     search_fields = ['name']
+    inlines = [BulletInline]
 
 class NadeAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Nade', 
-            {'fields': 
+        ('Nade',
+            {'fields':
                 ['name',
                 'map_name',
                 'nade_type',

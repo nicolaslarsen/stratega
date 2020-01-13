@@ -1,6 +1,7 @@
 from django.views import generic
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django import template
@@ -8,7 +9,7 @@ from .forms import MapForm, StratForm, NadeForm
 from django.urls import reverse
 from django.forms.models import inlineformset_factory
 
-
+from django.db.models import Q
 from .models import Map, Strategy, Nade, Bullet
 
 # Create your views here.
@@ -78,7 +79,7 @@ class CreateStratView(generic.FormView):
 
 def create_strat_view(request, pk):
     StratInlineFormSet = inlineformset_factory(Strategy, Bullet,
-            fields=('text', 'nade'), extra=2)
+            fields=('text', 'player', 'nade'), extra=1)
     _map = get_object_or_404(Map, pk=pk)
 
     if request.method == "POST":
@@ -95,7 +96,12 @@ def create_strat_view(request, pk):
         strat_form = StratForm()
         formset = StratInlineFormSet()
         for form in formset:
+            form.fields['player'].queryset = User.objects.filter(groups__name__in=['Member','Admin']).distinct()
             form.fields['nade'].queryset = Nade.objects.filter(map_name = _map)
+
+            form.fields['text'].widget.attrs.update({'class':'form-control'})
+            form.fields['player'].widget.attrs.update({'class':'form-control'})
+            form.fields['nade'].widget.attrs.update({'class':'form-control'})
 
     return render(request, 'StratBook/strat_add.html', {'form': strat_form, 'formset': formset})
 

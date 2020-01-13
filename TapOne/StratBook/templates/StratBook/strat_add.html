@@ -11,10 +11,57 @@
     {{ form|crispy }}
     <div class="card mt-4 bg-light">
       <div class="card-body">
-      {{ formset|crispy }}
+        <h3 class="card-title">Bullets</h3>
+        <div class="bullet-info bg-info mb-4 text-white">
+          When entering the text, just select a player and type <span class="text-dark">@player</span> instead of their name.
+          That way it will be easier to swap around later.
+        </div>
+        <hr>
+        <div class="row mt-4">
+          <div class="col-sm-6">
+            Description
+          </div>
+          <div class="col-sm-2">
+            Player
+          </div>
+          <div class="col-sm-2">
+            Nade
+          </div>
+        </div>
+        {% for bulletform in formset %}
+          <div class="row mt-4">
+            <div class="col-sm-6">
+              {{ bulletform.text }}
+            </div>
+            <div class="col-sm-2">
+              {{ bulletform.player }}
+            </div>
+            <div class="col-sm-2">
+              {{ bulletform.nade }}
+            </div>
+            <div class="col-sm-2">
+              <input type="button" value="Delete" class="btn bg-danger text-white">
+            </div>
+          </div>
+        {% endfor %}
+        <div class="row mt-4 empty_form" style="display:none">
+            <div class="col-sm-6">
+              {{ formset.empty_form.text }}
+            </div>
+            <div class="col-sm-2">
+              {{ formset.empty_form.player }}
+            </div>
+            <div class="col-sm-2">
+              {{ formset.empty_form.nade }}
+            </div>
+            <div class="col-sm-2">
+              <input type="button" value="Delete" class="btn bg-danger text-white">
+            </div>
+          </div>
+        {{ formset.management_form }}
       </div>
     </div >
-    <button type="submit" class="btn btn-success mt-2">+ Add Strategy</button>
+    <button type="submit" class="btn btn-success mt-4 mb-4">+ Add Strategy</button>
 
   </form>
 {% endblock %}

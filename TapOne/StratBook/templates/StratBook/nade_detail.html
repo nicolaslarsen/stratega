@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{nade.nade_type}}: {{nade.name}}{% endblock %}
+
+{% load static %}
+{% block content %}
+{% include 'StratBook/_mini_nav_nade.html' %}
+<hr>
+<div class="row">
+  <div class="col-sm-8">
+    <img src="{{nade.get_image_url}}">
+  </div>
+  <div class="col-sm-4">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h3 class="card-title">{{nade.name}}</h3>
+        <hr>
+        <p class="card-text">
+          <p>
+          {% if nade.description %}
+            {{nade.description|linebreaks}}</p>
+          {% else %}
+            <small class="text-muted">No description available</small>
+          {% endif %}
+          </p>
+        </p>
+      </div>
+    </div>
+    {% if perms.StratBook.edit_nade %}
+      <a class="btn btn-primary mt-4" href={% url 'StratBook:update_nade' nade.id %}>Edit</a>
+    {% endif %}
+    {% if perms.StratBook.delete_nade %}
+      <a class="btn btn-danger mt-4" href={% url 'StratBook:delete_nade' nade.id %}>Delete</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

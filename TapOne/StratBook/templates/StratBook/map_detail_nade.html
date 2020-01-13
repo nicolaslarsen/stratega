@@ -74,7 +74,15 @@
   {% endfor %}
 {% endif %}
 
+<div class="row mb-4">
+  <div class="col">
+{% if perms.StratBook.add_nade %}
+  <a href={% url 'StratBook:add_nade' map.id %} class="btn btn-success">+ Add Nade</a>
+{% endif %}
+
 {% if perms.StratBook.delete_map %}
   <a href={% url 'StratBook:delete_map' map.id %} class="btn btn-danger">- Delete Map</a>
 {% endif %}
+  </div>
+</div>
 {% endblock %}

@@ -10,10 +10,21 @@
     <h1 class="card-title">{{strat.name}}</h1>
     <hr>
     <p class="card-text">
-      <div class="desc">{{strat.description}}</div>
+      <div class="desc">
+      {% for bullet in strat.bullet_set.all %}
+        {{bullet.text|linebreaks}}
+          {% if bullet.nade %}
+            <a href={% url 'StratBook:nade' bullet.nade.id %} class="btn btn-primary mr-auto">
+                    See {{ bullet.nade.type_text }}
+            </a>
+          {% endif %}
+      {% endfor %}
+      </div>
       <hr>
       <p class="team">Side: {{strat.team}}</p>
-      <p class="date text-muted">Date added: {{strat.added_date}}</p>
+      <p class="date text-muted">
+        <small>Date added: {{strat.added_date}}</small>
+      </p>
     </p>
   </div>
 </div>

@@ -32,11 +32,13 @@
     </div>
   </div>
 </div>
-{% if perms.StratBook.add_map %}
-  <a href={% url 'StratBook:add_strat' map.id %} class="btn btn-success">+ Add Strategy</a>
-{% endif %}
-{% if perms.StratBook.delete_map %}
-  <a href={% url 'StratBook:delete_map' map.id %} class="btn btn-danger">- Delete Map</a>
-{% endif %}
+<div class="buttons mb-4">
+  {% if perms.StratBook.add_map %}
+    <a href={% url 'StratBook:add_strat' map.id %} class="btn btn-success">+ Add Strategy</a>
+  {% endif %}
+  {% if perms.StratBook.delete_map %}
+    <a href={% url 'StratBook:delete_map' map.id %} class="btn btn-danger">- Delete Map</a>
+  {% endif %}
+</div>
 {% endblock %}
 

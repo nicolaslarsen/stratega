@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Delete: {{map.name}}{% endblock %}
+{% block title %}Delete: {{nade.name}}{% endblock %}
 
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-  <p>Are you sure you want to delete "{{ map.name }}"?</p>
-  <p class="text-danger">Be aware that this will delete any attached strategies and leave nades hanging in the database</p>
+  <p>Are you sure you want to delete "{{ nade.name }}"?</p>
   <form method="post">
     {% csrf_token %}
     <input type="submit" value="Delete" class="btn btn-danger mt-2"></input>

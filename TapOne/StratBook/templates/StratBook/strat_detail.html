@@ -10,15 +10,16 @@
     <h1 class="card-title">{{strat.name}}</h1>
     <hr>
     <p class="card-text">
-      <div class="desc">
-      {% for bullet in strat.bullet_set.all %}
-        {{bullet.text|linebreaks}}
-          {% if bullet.nade %}
-            <a href={% url 'StratBook:nade' bullet.nade.id %} class="btn btn-primary mr-auto">
-                    See {{ bullet.nade.type_text }}
-            </a>
-          {% endif %}
-      {% endfor %}
+      <div class="bullets">
+        {% if not strat.bullet_set.all %}
+        <p class="text-muted">
+          <small>No description available for this strategy</small>
+        </p>
+        {% else %}
+          {% for bullet in strat.bullet_set.all %}
+          {% include 'StratBook/_bullet_card.html' %}
+          {% endfor %}
+        {% endif %}
       </div>
       <hr>
       <p class="team">Side: {{strat.team}}</p>

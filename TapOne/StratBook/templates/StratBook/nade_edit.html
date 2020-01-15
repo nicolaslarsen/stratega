@@ -4,6 +4,8 @@
 
 {% load crispy_forms_tags %}
 {% block content %}
+  {% include 'StratBook/_mini_nav_nade.html' %}
+  <hr>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}

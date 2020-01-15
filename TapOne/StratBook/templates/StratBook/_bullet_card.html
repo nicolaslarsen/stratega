@@ -1,0 +1,16 @@
+<div class="card bg-white">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-8">
+        {{bullet.replace_player_text|linebreaks}}
+      </div>
+      {% if bullet.nade %}
+      <div class="col-4">
+        <a href={% url 'StratBook:nade' bullet.nade.id %}
+        class="btn btn-primary mr-auto" 
+          target="_blank">See {{ bullet.nade.type_text }}</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

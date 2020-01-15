@@ -77,9 +77,11 @@ class CreateStratView(generic.FormView):
         context['map'] = get_object_or_404(Map, pk=self.kwargs['pk'])
         return context
 
+@login_required
+@permission_required('StratBook.add_strategy', raise_exception=True)
 def create_strat_view(request, pk):
-    StratInlineFormSet = inlineformset_factory(Strategy, Bullet,
-            fields=('text', 'player', 'nade'), extra=1)
+    BulletInlineFormSet = inlineformset_factory(Strategy, Bullet,
+            fields=('text', 'player', 'nade'), extra=2)
     _map = get_object_or_404(Map, pk=pk)
 
     if request.method == "POST":
@@ -87,23 +89,25 @@ def create_strat_view(request, pk):
         if strat_form.is_valid():
             strat_form.instance.map_name = _map
             created_strat = strat_form.save(commit=False)
-            formset = StratInlineFormSet(request.POST, request.FILES, instance=created_strat)
+            formset = BulletInlineFormSet(request.POST, request.FILES, instance=created_strat)
             if formset.is_valid():
                 created_strat.save()
                 formset.save()
                 return HttpResponseRedirect(reverse('StratBook:strat', args=(created_strat.id,)))
     else:
         strat_form = StratForm()
-        formset = StratInlineFormSet()
+        formset = BulletInlineFormSet()
         for form in formset:
-            form.fields['player'].queryset = User.objects.filter(groups__name__in=['Member','Admin']).distinct()
+            form.fields['player'].queryset = User.objects.filter(
+                    groups__name__in=['Member','Admin']).distinct()
             form.fields['nade'].queryset = Nade.objects.filter(map_name = _map)
 
             form.fields['text'].widget.attrs.update({'class':'form-control'})
             form.fields['player'].widget.attrs.update({'class':'form-control'})
             form.fields['nade'].widget.attrs.update({'class':'form-control'})
 
-    return render(request, 'StratBook/strat_add.html', {'form': strat_form, 'formset': formset})
+    return render(request, 'StratBook/strat_add.html', {'form':strat_form, 
+            'formset':formset, 'map': _map})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -111,11 +115,48 @@ def create_strat_view(request, pk):
 class UpdateStrat(generic.UpdateView):
     model = Strategy
     template_name = 'StratBook/strat_edit.html'
-    fields = ['name', 'map_name', 'description', 'team']
+    fields = ['name', 'map_name', 'team']
+    context_object_name = 'strat'
 
     def get_success_url(self):
         return reverse('StratBook:strat', args=([self.object.id]))
 
+@login_required
+@permission_required('StratBook.edit_strategy', raise_exception=True)
+def update_strat_view(request, pk):
+    strat = get_object_or_404(Strategy, pk=pk)
+
+    BulletInlineFormSet = inlineformset_factory(Strategy, Bullet,
+            fields=('text', 'player', 'nade'), extra=1)
+
+    strat_form = StratForm(instance=strat)
+    formset = BulletInlineFormSet(instance=strat)
+
+    if request.method == "POST":
+        strat_form = StratForm(request.POST, instance=strat)
+        formset = BulletInlineFormSet(request.POST, request.FILES)
+
+        if strat_form.is_valid():
+            editted_strat = strat_form.save(commit=False)
+            formset = BulletInlineFormSet(request.POST, request.FILES, instance=editted_strat)
+            if formset.is_valid():
+                editted_strat.save()
+                formset.save()
+                # a little bit sketchy way to delete empty forms
+                for bullet in strat.bullet_set.all():
+                    bullet.delete_if_null()
+                return HttpResponseRedirect(reverse('StratBook:strat', args=(strat.id,)))
+    else:
+        for form in formset:
+            form.fields['player'].queryset = User.objects.filter(
+                    groups__name__in=['Member','Admin']).distinct()
+            form.fields['nade'].queryset = Nade.objects.filter(map_name=strat.map_name)
+            form.fields['text'].widget.attrs.update({'class':'form-control'})
+            form.fields['player'].widget.attrs.update({'class':'form-control'})
+            form.fields['nade'].widget.attrs.update({'class':'form-control'})
+
+    return render(request, 'StratBook/strat_edit.html', {'form':strat_form, 
+            'formset':formset, 'strat':strat})
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(permission_required('StratBook.delete_strategy', raise_exception=True), name ='dispatch')

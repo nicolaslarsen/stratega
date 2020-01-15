@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+import re
 
 # Create your models here.
 class Map(models.Model):
@@ -72,8 +73,16 @@ class Nade(models.Model):
                 return name
 
 class Bullet(models.Model):
-    text = models.CharField(max_length=200)
+    text = models.CharField(max_length=200, blank=True)
     strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
     player = models.ForeignKey(get_user_model(),
             on_delete=models.SET_NULL, blank=True, null=True)
     nade = models.ForeignKey(Nade, on_delete=models.SET_NULL, blank=True, null=True)
+
+    def delete_if_null(self):
+        if (not self.text and not self.nade and not self.player):
+            self.delete()
+
+    def replace_player_text(self):
+        return self.text.replace("@Player", self.player.username)
+

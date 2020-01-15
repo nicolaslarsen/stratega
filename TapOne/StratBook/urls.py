@@ -16,6 +16,6 @@ urlpatterns = [
     path('nade/<int:pk>/delete', views.NadeDeleteView.as_view(), name="delete_nade"),
     path('map/<int:pk>/nades/add', views.NadeCreateView.as_view(), name='add_nade'),
     path('strat/<int:pk>/', views.StrategyDetailView.as_view(), name="strat"),
-    path('strat/<int:pk>/edit/', views.UpdateStrat.as_view(), name="update_strat"),
+    path('strat/<int:pk>/edit/', views.update_strat_view, name="update_strat"),
     path('strat/<int:pk>/delete/', views.DeleteStrat.as_view(), name="delete_strat"),
 ]

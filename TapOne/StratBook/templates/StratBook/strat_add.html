@@ -3,19 +3,31 @@
 {% block title %}Add {{map.name}} Strategy{% endblock %}
 
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
-  <h2>{{map.name}}</h2>
+  {% include 'StratBook/_mini_nav.html' %}
+  <hr>
+  <h2>Add {{map.name}} Strategy</h2>
   <hr>
   <form method="post">
     {% csrf_token %}
-    {{ form|crispy }}
+    <div class="row">
+      <div class="col-sm-6">
+        {{ form.name|as_crispy_field }}
+      </div>
+      <div class="col-sm-4">
+        {{ form.team|as_crispy_field }}
+      </div>
+    </div>
     <div class="card mt-4 bg-light">
       <div class="card-body">
         <h3 class="card-title">Bullets</h3>
-        <div class="bullet-info bg-info mb-4 text-white">
-          When entering the text, just select a player and type <span class="text-dark">@player</span> instead of their name.
+        <p class="bullet-info bg-info mb-4 text-white">
+          When entering the text, just type <span class="text-dark">@Player</span>
+          instead of their name when referring to a player.
+          Then select them in the dropdown player menu.
           That way it will be easier to swap around later.
-        </div>
+        </p>
         <hr>
         <div class="row mt-4">
           <div class="col-sm-6">
@@ -29,39 +41,34 @@
           </div>
         </div>
         {% for bulletform in formset %}
-          <div class="row mt-4">
-            <div class="col-sm-6">
-              {{ bulletform.text }}
-            </div>
-            <div class="col-sm-2">
-              {{ bulletform.player }}
-            </div>
-            <div class="col-sm-2">
-              {{ bulletform.nade }}
-            </div>
-            <div class="col-sm-2">
-              <input type="button" value="Delete" class="btn bg-danger text-white">
+          {% if forloop.counter == formset|length %}
+          <div id="hidden-bullet" style="display:none">
+          {% else %}
+          <div id="shown-bullets">
+          {% endif %}
+            <div id="row_bullet_set-{{forloop.counter}}" class="row mt-4">
+              <div class="col-sm-6">
+                {{ bulletform.text }}
+              </div>
+              <div class="col-sm-2">
+                {{ bulletform.player }}
+              </div>
+              <div class="col-sm-2">
+                {{ bulletform.nade }}
+              </div>
+              <div class="col-sm-2">
+                      <input id="delete_bullet_set-{{forloop.counter}}"
+                      type="button" value="Delete" class="btn bg-danger text-white">
+              </div>
             </div>
           </div>
         {% endfor %}
-        <div class="row mt-4 empty_form" style="display:none">
-            <div class="col-sm-6">
-              {{ formset.empty_form.text }}
-            </div>
-            <div class="col-sm-2">
-              {{ formset.empty_form.player }}
-            </div>
-            <div class="col-sm-2">
-              {{ formset.empty_form.nade }}
-            </div>
-            <div class="col-sm-2">
-              <input type="button" value="Delete" class="btn bg-danger text-white">
-            </div>
-          </div>
         {{ formset.management_form }}
+        <a id="add-more" class="btn btn-dark text-white mt-4">+ Add another bullet</a>
+        <script src={% static 'StratBook/js/strat_creation.js' %}></script>
       </div>
     </div >
-    <button type="submit" class="btn btn-success mt-4 mb-4">+ Add Strategy</button>
+    <button type="submit" class="btn btn-success mt-4 mb-4">Create Strategy</button>
 
   </form>
 {% endblock %}

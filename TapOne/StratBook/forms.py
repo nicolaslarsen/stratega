@@ -14,6 +14,9 @@ class StratForm(forms.ModelForm):
     map_name = forms.ModelChoiceField(queryset=Map.objects.all(), required=False, widget=forms.HiddenInput())
     name = forms.CharField(max_length=200)
     team = forms.ChoiceField(choices=Strategy.TEAM_CHOICES)
+    
+    name.widget.attrs.update({'class': 'form-control'})
+    team.widget.attrs.update({'class': 'form-control'})
 
     class Meta:
         model = Strategy

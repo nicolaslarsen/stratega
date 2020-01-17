@@ -84,5 +84,11 @@ class Bullet(models.Model):
             self.delete()
 
     def replace_player_text(self):
-        return self.text.replace("@Player", self.player.username)
+        if self.player:
+            name = self.player.username
+            if self.player.firstname:
+                name = self.player.firstname
 
+            return self.text.replace("@Player", self.player.username)
+        else:
+            return self.text

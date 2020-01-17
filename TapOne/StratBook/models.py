@@ -3,10 +3,14 @@ from django.utils import timezone
 from django.contrib.auth import get_user_model
 import re
 
+def map_directory_path(instance, filename):
+    return 'maps/{0}_{1}'.format(timezone.now(), filename)
+
 # Create your models here.
 class Map(models.Model):
     name = models.CharField(max_length=50)
     active_duty = models.BooleanField(default=True)
+    img = models.ImageField(upload_to=map_directory_path, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -37,6 +41,11 @@ class Strategy(models.Model):
     def __str__(self):
         return self.name
 
+    def team_text(self):
+        for (t, name) in self.TEAM_CHOICES:
+            if self.team == t:
+                return name
+
 def nade_directory_path(instance, filename):
     return 'nades/{0}_{1}'.format(instance.map_name.id, filename)
 
@@ -65,7 +74,7 @@ class Nade(models.Model):
     def get_setup_image_url(self):
         if (self.setup_img):
             return self.setup_img.url
-        if (self.img_link):
+        if (self.setup_img_link):
             return self.setup_img_link
         return ''
 

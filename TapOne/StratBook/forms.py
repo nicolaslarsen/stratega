@@ -5,10 +5,11 @@ from .models import Map, Strategy, Nade, Bullet
 class MapForm(forms.ModelForm):
     name = forms.CharField(max_length=50)
     active_duty = forms.BooleanField(initial=True, required=False)
+    img = forms.ImageField(required=False)
 
     class Meta:
     	model = Map
-    	fields = ('name', 'active_duty')
+    	fields = ('name', 'active_duty', 'img')
 
 class StratForm(forms.ModelForm):
     map_name = forms.ModelChoiceField(queryset=Map.objects.all(), required=False, widget=forms.HiddenInput())

@@ -1,15 +1,29 @@
 {% extends "base.html" %}
 
 {% block title %}Strat: {{strat.name}}{% endblock %}
+{% load static %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href={% static 'StratBook/css/strat_detail.css' %}>
 {% include 'StratBook/_mini_nav.html' %}
 <hr>
 <div class="card bg-light mt-4">
   <div class="card-body">
-    <h1 class="card-title">{{strat.name}}</h1>
+    <div class="row">
+      <div class="col-10">
+        <h1 class="card-title">{{strat.name}}</h1>
+      </div>
+      <div class="col-2">
+        <div class="custom-control custom-checkbox mb-4">
+          <input id="egoCheck" type="checkbox" class="custom-control-input">
+          <label class="custom-control-label" for="egoCheck">Ego Mode</label>
+        </div>
+      </div>
+    </div>
     <hr>
     <p class="card-text">
+      <div id="egobox" class="bg-info bullet-info mt-4 mb-4" style="display:none">Gaaaaaaaal en ego der trykker.
+        Jeg har ikke engang lavet det endnu loooooooooooooooooooooool</div>
       <div id="bullets">
         {% if not strat.bullet_set.all %}
         <p class="text-muted">
@@ -17,11 +31,11 @@
         </p>
         {% else %}
           {% for bullet in strat.bullet_set.all %}
-          {% include 'StratBook/_bullet_card.html' %}
+            {% include 'StratBook/_bullet_card.html' %}
           {% endfor %}
         {% endif %}
       </div>
-      <p class="team mt-4 ml-4">Side: {{strat.team}}</p>
+      <p class="team mt-4 ml-4">Side: {{strat.team_text}}</p>
       <p class="date text-muted ml-4">
         <small>Date added: {{strat.added_date}}</small>
       </p>
@@ -29,9 +43,10 @@
   </div>
 </div>
 {% if perms.StratBook.edit_strategy %}
-    <a class="btn btn-primary mt-4" href={% url 'StratBook:update_strat' strat.id %}>Edit</a>
+    <a class="btn btn-primary mb-4 mt-4" href={% url 'StratBook:update_strat' strat.id %}>Edit</a>
 {% endif %}
 {% if perms.StratBook.delete_strategy %}
-    <a class="btn btn-danger mt-4" href={% url 'StratBook:delete_strat' strat.id %}>Delete</a>
+    <a class="btn btn-danger mb-4 mt-4" href={% url 'StratBook:delete_strat' strat.id %}>Delete</a>
 {% endif %}
+<script src={% static 'StratBook/js/strat_detail.js' %}></script>
 {% endblock %}

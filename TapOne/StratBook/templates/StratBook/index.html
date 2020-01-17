@@ -20,16 +20,14 @@
     	    <div class="col-sm-3">
 	          <a class="card-link" href={% url 'StratBook:map' map.id %}>
 	      	    <div class="card">
-                {% with 'StratBook/images/'|add:map.name|add:'.jpg' as image_static %}
-                <img src={% static image_static %} class="card-img-top">
-                {% endwith %}
+                <img src={{ map.img.url }} class="card-img-top">
 	      		    <div class="card-body">
 	      			    <p class="card-text">{{ map.name }}</p>
 	      		    </div>
 	      	    </div>
 	    	    </a>
 	        </div>
-        {% if forloop.counter|divisibleby:4 or forloop.counter == map_list|length %}
+        {% if forloop.counter|divisibleby:4 or forloop.last %}
         </div>
         {% endif %}
       {% endfor %}
@@ -49,23 +47,21 @@
       	    <div class="col-sm-3">
   	          <a class="card-link" href={% url 'StratBook:map' map.id %}>
   	      	    <div class="card">
-                  {% with 'StratBook/images/'|add:map.name|add:'.jpg' as image_static %}
-                  <img src={% static image_static %} class="card-img-top">
-                  {% endwith %}
+                  <img src={{ map.img.url }} class="card-img-top">
   	      		    <div class="card-body">
   	      			    <p class="card-text">{{ map.name }}</p>
   	      		    </div>
   	      	    </div>
   	    	    </a>
   	        </div>
-          {% if forloop.counter|divisibleby:4 or forloop.counter == inactive_map_list|length %}
+          {% if forloop.counter|divisibleby:4 or forloop.last %}
           </div>
           {% endif %}
         {% endfor %}
-        </div>
       {% else %}
         <p>No Inactive maps available.</p>
       {% endif %}
+    </div>
   {% else %}
     <p>Your user does not have access to any maps</p>
   {% endif %}
@@ -75,5 +71,4 @@
   <script src={% static 'StratBook/js/index.js' %}>
   </script>
 {% endblock %}
-
 

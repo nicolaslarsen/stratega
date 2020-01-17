@@ -5,7 +5,7 @@ from .models import Map, Strategy, Nade, Bullet
 
 class MapAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Map', {'fields': ['name', 'active_duty']}),
+        ('Map', {'fields': ['name', 'active_duty', 'img']}),
     ]
     list_display = ['name']
 

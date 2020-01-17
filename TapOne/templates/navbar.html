@@ -19,6 +19,9 @@
           <li class="nav-item">
             <div class="welcomer"> Welcome {{user.username}}</div>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href={% url 'password_change' %}>Change Password</a>
+          </li>
           <li class="divider-vertical"></li>
           <li class="nav-item">
             <a class="nav-link" href={% url 'logout' %}>Logout</a>

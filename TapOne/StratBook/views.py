@@ -49,7 +49,7 @@ class CreateMapView(generic.FormView):
 
     def form_valid(self, form):
         _map = form.save()
-        return HttpResponseRedirect(reverse('StratBook:map', args=(_map.id,)))
+        return HttpResponseRedirect(reverse('StratBook:index'))
 
 
 @method_decorator(login_required, name='dispatch')
@@ -106,7 +106,7 @@ def create_strat_view(request, pk):
             form.fields['player'].widget.attrs.update({'class':'form-control'})
             form.fields['nade'].widget.attrs.update({'class':'form-control'})
 
-    return render(request, 'StratBook/strat_add.html', {'form':strat_form, 
+    return render(request, 'StratBook/strat_add.html', {'form':strat_form,
             'formset':formset, 'map': _map})
 
 
@@ -198,7 +198,7 @@ class NadeDetailView(generic.DetailView):
     context_object_name = 'nade'
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(permission_required('StratBook.add_strategy', raise_exception=True), name ='dispatch')
+@method_decorator(permission_required('StratBook.add_nade', raise_exception=True), name ='dispatch')
 class NadeCreateView(generic.FormView):
     form_class = NadeForm
     template_name = 'StratBook/nade_add.html'
@@ -215,7 +215,7 @@ class NadeCreateView(generic.FormView):
         return context
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(permission_required('StratBook.delete_map', raise_exception=True), name ='dispatch')
+@method_decorator(permission_required('StratBook.delete_nade', raise_exception=True), name ='dispatch')
 class NadeDeleteView(generic.DeleteView):
     model = Nade
     template_name = 'StratBook/nade_delete.html'
@@ -223,7 +223,7 @@ class NadeDeleteView(generic.DeleteView):
     success_url = 'stratbook/nadebook/'
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(permission_required('StratBook.edit_strategy', raise_exception=True), name ='dispatch')
+@method_decorator(permission_required('StratBook.edit_nade', raise_exception=True), name ='dispatch')
 class NadeUpdateView(generic.UpdateView):
     model = Nade
     template_name = 'StratBook/nade_edit.html'

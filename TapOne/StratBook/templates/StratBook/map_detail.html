@@ -13,7 +13,15 @@
         <h3 class="card-title text-primary">Counter-Terrorist</h3>
         <p class="card-text">
           {% for strat in map.ct_strategies %}
-            {% include 'StratBook/_strat_card.html' %}
+          {% if not forloop.counter|divisibleby:2 %}
+            <div class="row mt-2">
+          {% endif %}
+              <div class="col-sm-6">
+                {% include 'StratBook/_strat_card.html' %}
+              </div>
+          {% if forloop.counter|divisibleby:2 or forloop.last %}
+            </div>
+          {% endif %}
           {% endfor %}
         </p>
       </div>
@@ -25,7 +33,15 @@
         <h3 class="card-title text-danger">Terrorist</h3>
         <p class="card-text">
           {% for strat in map.t_strategies %}
-            {% include 'StratBook/_strat_card.html' %}
+          {% if not forloop.counter|divisibleby:2 %}
+            <div class="row mt-2">
+          {% endif %}
+              <div class="col-sm-6">
+                {% include 'StratBook/_strat_card.html' %}
+              </div>
+          {% if forloop.counter|divisibleby:2 or forloop.last %}
+            </div>
+          {% endif %}
           {% endfor %}
         </p>
       </div>

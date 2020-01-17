@@ -51,6 +51,8 @@ class Nade(models.Model):
     map_name = models.ForeignKey(Map, on_delete=models.SET_NULL, null=True)
     nade_type = models.CharField(max_length=1, choices=NADE_TYPE_CHOICES)
     description = models.TextField(blank=True)
+    setup_img_link = models.URLField(blank=True)
+    setup_img = models.ImageField(upload_to=nade_directory_path, blank=True, null=True)
     img_link = models.URLField(blank=True)
     img = models.ImageField(upload_to=nade_directory_path, blank=True, null=True)
 
@@ -60,17 +62,32 @@ class Nade(models.Model):
     def get_name(self):
         return self.name
 
+    def get_setup_image_url(self):
+        if (self.setup_img):
+            return self.setup_img.url
+        if (self.img_link):
+            return self.setup_img_link
+        return ''
+
     def get_image_url(self):
         if (self.img):
             return self.img.url
         if (self.img_link):
             return self.img_link
-        return '';
+        return ''
 
     def type_text(self):
         for (t, name) in self.NADE_TYPE_CHOICES:
             if self.nade_type == t:
                 return name
+
+    def has_setup(self):
+        if (self.setup_img):
+            return True
+        elif (self.setup_img_link):
+            return True
+        else:
+            return False
 
 class Bullet(models.Model):
     text = models.CharField(max_length=200, blank=True)
@@ -86,9 +103,9 @@ class Bullet(models.Model):
     def replace_player_text(self):
         if self.player:
             name = self.player.username
-            if self.player.firstname:
-                name = self.player.firstname
+            if self.player.first_name:
+                name = self.player.first_name
 
-            return self.text.replace("@Player", self.player.username)
+            return self.text.replace("@player", self.player.username)
         else:
             return self.text

@@ -227,7 +227,8 @@ class NadeDeleteView(generic.DeleteView):
 class NadeUpdateView(generic.UpdateView):
     model = Nade
     template_name = 'StratBook/nade_edit.html'
-    fields = ['name', 'map_name', 'nade_type', 'description', 'img_link', 'img']
+    fields = ['name', 'map_name', 'nade_type', 'description',
+        'setup_img_link', 'setup_img', 'img_link', 'img']
 
     def get_success_url(self):
         return reverse('StratBook:nade', args=([self.object.id]))

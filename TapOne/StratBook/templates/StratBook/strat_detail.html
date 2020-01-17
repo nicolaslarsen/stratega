@@ -5,12 +5,12 @@
 {% block content %}
 {% include 'StratBook/_mini_nav.html' %}
 <hr>
-<div class="card bg-light mt-4"> 
+<div class="card bg-light mt-4">
   <div class="card-body">
     <h1 class="card-title">{{strat.name}}</h1>
     <hr>
     <p class="card-text">
-      <div class="bullets">
+      <div id="bullets">
         {% if not strat.bullet_set.all %}
         <p class="text-muted">
           <small>No description available for this strategy</small>
@@ -21,9 +21,8 @@
           {% endfor %}
         {% endif %}
       </div>
-      <hr>
-      <p class="team">Side: {{strat.team}}</p>
-      <p class="date text-muted">
+      <p class="team mt-4 ml-4">Side: {{strat.team}}</p>
+      <p class="date text-muted ml-4">
         <small>Date added: {{strat.added_date}}</small>
       </p>
     </p>

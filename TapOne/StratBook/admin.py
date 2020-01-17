@@ -25,6 +25,8 @@ class NadeAdmin(admin.ModelAdmin):
                 'map_name',
                 'nade_type',
                 'description',
+                'setup_img_link',
+                'setup_img',
                 'img_link',
                 'img']
         })

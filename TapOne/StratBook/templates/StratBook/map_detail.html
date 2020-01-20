@@ -38,7 +38,7 @@
       <div class="card-body">
         <h3 class="card-title text-danger">Terrorist</h3>
         <p class="card-text">
-          {% if map.ct_strategies %}
+          {% if map.t_strategies.all %}
             {% for strat in map.t_strategies %}
             {% if not forloop.counter|divisibleby:2 %}
               <div class="row mt-2">

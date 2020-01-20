@@ -61,7 +61,7 @@
   </div>
 </div>
 <div class="buttons mb-4">
-  {% if perms.StratBook.add_map %}
+  {% if perms.StratBook.add_strat %}
     <a href={% url 'StratBook:add_strat' map.id %} class="btn btn-success">+ Add Strategy</a>
   {% endif %}
   {% if perms.StratBook.delete_map %}

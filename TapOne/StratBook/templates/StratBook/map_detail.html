@@ -12,17 +12,23 @@
       <div class="card-body">
         <h3 class="card-title text-primary">Counter-Terrorist</h3>
         <p class="card-text">
-          {% for strat in map.ct_strategies %}
-          {% if not forloop.counter|divisibleby:2 %}
-            <div class="row mt-2">
-          {% endif %}
-              <div class="col-sm-6">
-                {% include 'StratBook/_strat_card.html' %}
+          {% if map.ct_strategies %}
+            {% for strat in map.ct_strategies %}
+            {% if not forloop.counter|divisibleby:2 %}
+              <div class="row mt-2">
+            {% endif %}
+                <div class="col-sm-6">
+                  {% include 'StratBook/_strat_card.html' %}
+                </div>
+            {% if forloop.counter|divisibleby:2 or forloop.last %}
               </div>
-          {% if forloop.counter|divisibleby:2 or forloop.last %}
-            </div>
+            {% endif %}
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">
+              <small>No strats available</small>
+            </p>
           {% endif %}
-          {% endfor %}
         </p>
       </div>
     </div>
@@ -32,17 +38,23 @@
       <div class="card-body">
         <h3 class="card-title text-danger">Terrorist</h3>
         <p class="card-text">
-          {% for strat in map.t_strategies %}
-          {% if not forloop.counter|divisibleby:2 %}
-            <div class="row mt-2">
-          {% endif %}
-              <div class="col-sm-6">
-                {% include 'StratBook/_strat_card.html' %}
+          {% if map.ct_strategies %}
+            {% for strat in map.t_strategies %}
+            {% if not forloop.counter|divisibleby:2 %}
+              <div class="row mt-2">
+            {% endif %}
+                <div class="col-sm-6">
+                  {% include 'StratBook/_strat_card.html' %}
+                </div>
+            {% if forloop.counter|divisibleby:2 or forloop.last %}
               </div>
-          {% if forloop.counter|divisibleby:2 or forloop.last %}
-            </div>
+            {% endif %}
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">
+              <small>No strats available</small>
+            </p>
           {% endif %}
-          {% endfor %}
         </p>
       </div>
     </div>

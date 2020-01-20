@@ -112,9 +112,9 @@ class Bullet(models.Model):
     def replace_player_text(self):
         if self.player:
             name = self.player.username
-            if self.player.first_name:
-                name = self.player.first_name
+            #if self.player.first_name:
+            #    name = self.player.first_name
 
-            return self.text.replace("@player", self.player.username)
+            return self.text.replace("@player", name)
         else:
             return self.text

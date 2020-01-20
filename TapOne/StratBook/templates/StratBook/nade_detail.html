@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{nade.nade_type}}: {{nade.name}}{% endblock %}
+{% block title %}{{nade.type_text}}: {{nade.name}}{% endblock %}
 
 {% load static %}
 {% block content %}
@@ -10,7 +10,7 @@
   <div class="col-sm-8">
 
 
-    <div id="nades" class="carousel slide" data-interval="false">
+    <div id="nades" class="carousel slide mb-4" data-interval="false">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img class="d-block w-100" src="{{nade.get_image_url}}" alt="Nade">
@@ -51,7 +51,7 @@
         </p>
       </div>
     </div>
-    {% if perms.StratBook.edit_nade %}
+    {% if perms.StratBook.change_nade %}
       <a class="btn btn-primary mt-4" href={% url 'StratBook:update_nade' nade.id %}>Edit</a>
     {% endif %}
     {% if perms.StratBook.delete_nade %}

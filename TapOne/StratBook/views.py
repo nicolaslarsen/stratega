@@ -111,7 +111,7 @@ def create_strat_view(request, pk):
 
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(permission_required('StratBook.edit_strategy', raise_exception=True), name ='dispatch')
+@method_decorator(permission_required('StratBook.change_strategy', raise_exception=True), name ='dispatch')
 class UpdateStrat(generic.UpdateView):
     model = Strategy
     template_name = 'StratBook/strat_edit.html'
@@ -122,7 +122,7 @@ class UpdateStrat(generic.UpdateView):
         return reverse('StratBook:strat', args=([self.object.id]))
 
 @login_required
-@permission_required('StratBook.edit_strategy', raise_exception=True)
+@permission_required('StratBook.change_strategy', raise_exception=True)
 def update_strat_view(request, pk):
     strat = get_object_or_404(Strategy, pk=pk)
 
@@ -223,7 +223,7 @@ class NadeDeleteView(generic.DeleteView):
     success_url = 'stratbook/nadebook/'
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(permission_required('StratBook.edit_nade', raise_exception=True), name ='dispatch')
+@method_decorator(permission_required('StratBook.change_nade', raise_exception=True), name ='dispatch')
 class NadeUpdateView(generic.UpdateView):
     model = Nade
     template_name = 'StratBook/nade_edit.html'

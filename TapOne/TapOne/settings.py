@@ -25,7 +25,7 @@ SECRET_KEY = 'rh@2629fyes0wvgw9b8z5cb&x%gr$n*+o=%$+j58u76m0*cl45'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.132', '.tapone.ga', 'localhost']
+ALLOWED_HOSTS = ['192.168.0.107', '.tapone.ga', 'localhost']
 
 
 # Application definition
@@ -121,9 +121,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'TapOne', 'static'),
 ]
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'

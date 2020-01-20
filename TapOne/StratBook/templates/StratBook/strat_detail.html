@@ -42,7 +42,7 @@
     </p>
   </div>
 </div>
-{% if perms.StratBook.edit_strategy %}
+{% if perms.StratBook.change_strategy %}
     <a class="btn btn-primary mb-4 mt-4" href={% url 'StratBook:update_strat' strat.id %}>Edit</a>
 {% endif %}
 {% if perms.StratBook.delete_strategy %}

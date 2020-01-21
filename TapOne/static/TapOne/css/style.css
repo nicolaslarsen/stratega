@@ -1,0 +1,45 @@
+nav.bg-dark{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.content {
+	font-size: 20px;
+}
+
+div.alert.alert-error {
+	padding-left: 15px;
+	color: #721c24;
+	background: #f8d7da;
+}
+
+div.error {
+	background: #f8d7da;
+}
+
+div.success{
+	padding-left: 15px;
+}
+
+.card-link{
+	text-decoration: none;
+	color: #212529;
+}
+
+.welcomer{
+  padding: 8px;
+  font-size: 1rem;
+  color: red;
+}
+
+textarea{
+	width: 50%;
+}
+
+img{
+  width: 100%
+}
+
+.bullet-info{
+	padding: 10px;
+}

@@ -1,5 +1,12 @@
 $(document).ready(function(){
   $("#egoCheck").click(function(){
-    $("#egobox").toggle();
+    var isChecked = $("#egoCheck").is(":checked");
+    if (isChecked){
+      $(".selfless").hide();
+    }
+    else {
+      $(".selfless").show();
+    }
+    $(".show").removeClass('show');
   });
 });

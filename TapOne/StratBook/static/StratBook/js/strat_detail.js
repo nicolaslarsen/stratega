@@ -16,6 +16,6 @@ $(document).ready(function(){
   });
 
   $(window).on('resize', function(){
-    $(".sticky-top").css('max-height', '70vh');
+    $(".sticky-top").css('max-height', '100vh');
   }).resize();
 });

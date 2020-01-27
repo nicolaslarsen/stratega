@@ -47,6 +47,13 @@
           {% else %}
             <small class="text-muted">No description available</small>
           {% endif %}
+            <hr>
+            <p><small class="text-muted">Included in:</small></p>
+            {% for bullet in nade.bullet_set.all %}
+            <a class="btn btn-outline-dark" href={% url 'StratBook:strat' bullet.strategy.id %}>
+                    {{bullet.strategy}}
+            </a>
+            {% endfor %}
           </p>
         </p>
       </div>

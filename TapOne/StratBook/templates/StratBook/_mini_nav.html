@@ -10,6 +10,12 @@
               href={% url 'StratBook:map' strat.map_name.id %}>&laquo; {{strat.map_name.name}}
       </a>
     </li>
+    {% elif map %}
+    <li class="nav-link">
+      <a class="btn btn-outline-primary btn-light" 
+              href={% url 'StratBook:map' map.id %}>&laquo; {{map.name}}
+      </a>
+    </li>
     {% endif %}
   </ul>
 </nav>

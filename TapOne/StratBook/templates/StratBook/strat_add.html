@@ -40,11 +40,11 @@
             Nade
           </div>
         </div>
+        <div id="shown-bullets">
         {% for bulletform in formset %}
-          {% if forloop.counter == formset|length %}
+          {% if forloop.last %}
+          </div>
           <div id="hidden-bullet" style="display:none">
-          {% else %}
-          <div id="shown-bullets">
           {% endif %}
             <div id="row_bullet_set-{{forloop.counter}}" class="row mt-4">
               <div class="col-sm-6">
@@ -61,10 +61,10 @@
                       type="button" value="Delete" class="btn bg-danger text-white">
               </div>
             </div>
-          </div>
         {% endfor %}
+        </div>
         {{ formset.management_form }}
-        <a id="add-more" class="btn btn-dark text-white mt-4">+ Add another bullet</a>
+        <a id="add-more" class="btn btn-dark text-white mt-4">+ Add bullet</a>
         <script src={% static 'StratBook/js/strat_creation.js' %}></script>
       </div>
     </div >

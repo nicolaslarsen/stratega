@@ -7,39 +7,47 @@
 <link rel="stylesheet" type="text/css" href={% static 'StratBook/css/strat_detail.css' %}>
 {% include 'StratBook/_mini_nav.html' %}
 <hr>
-<div class="card bg-light mt-4">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-10">
-        <h1 class="card-title">{{strat.name}}</h1>
-      </div>
-      <div class="col-2">
-        <div class="custom-control custom-checkbox mb-4">
-          <input id="egoCheck" type="checkbox" class="custom-control-input">
-          <label class="custom-control-label" for="egoCheck">Ego Mode</label>
+<div class="row">
+  <div class="col-9">
+    <div class="card bg-light mt-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-10">
+            <h1 class="card-title">{{strat.name}}</h1>
+          </div>
+          <div class="col-md-2">
+            <div class="custom-control custom-checkbox mb-4">
+              <input id="egoCheck" type="checkbox" class="custom-control-input">
+              <label class="custom-control-label" for="egoCheck">Ego Mode</label>
+            </div>
+          </div>
         </div>
+        <hr>
+        <p class="card-text">
+          <div id="bullets">
+            {% if not strat.bullet_set.all %}
+              <p class="text-muted">
+                <small>No description available for this strategy</small>
+              </p>
+            {% else %}
+              {% for bullet in strat.bullet_set.all %}
+                {% include 'StratBook/_bullet_card.html' %}
+              {% endfor %}
+            {% endif %}
+          </div>
+          <p class="team mt-4">Side: {{strat.team_text}}</p>
+          <p class="date text-muted">
+            <small>Date added: {{strat.added_date}}</small>
+          </p>
+        </p>
       </div>
     </div>
-    <hr>
-    <p class="card-text">
-      <div id="bullets">
-        {% if not strat.bullet_set.all %}
-        <p class="text-muted">
-          <small>No description available for this strategy</small>
-        </p>
-        {% else %}
-          {% for bullet in strat.bullet_set.all %}
-            {% include 'StratBook/_bullet_card.html' %}
-          {% endfor %}
-        {% endif %}
-      </div>
-      <p class="team mt-4 ml-4">Side: {{strat.team_text}}</p>
-      <p class="date text-muted ml-4">
-        <small>Date added: {{strat.added_date}}</small>
-      </p>
-    </p>
+  </div>
+  <div class="col-3 mt-4 bg-light">
+    {% include 'StratBook/_detail_sidebar.html' %}
   </div>
 </div>
+
 {% if perms.StratBook.change_strategy %}
     <a class="btn btn-primary mb-4 mt-4" href={% url 'StratBook:update_strat' strat.id %}>Edit</a>
 {% endif %}

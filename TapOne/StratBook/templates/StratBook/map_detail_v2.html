@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}{{map.name}} Strats{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href={% static 'StratBook/css/strat_detail.css' %}>
+<script src={% static 'StratBook/js/strat_detail.js' %}></script>
+
+{% include 'StratBook/_mini_nav.html' %}
+<hr>
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="strats">
+      {% if not map.strategy_set.all %}
+        <p><small class="text-muted"> No strategies available</small></p>
+      {% endif %}
+
+      {% for strat in map.ct_strategies %}
+      <div class="strat" id="strat-{{strat.id}}">
+        <a class="{{strat.team}}-link" href={% url 'StratBook:strat' strat.id %}>
+          <h3 class="mb-4">{{strat.name}}</h3>
+        </a>
+        <div id="bullets-{{strat.id}}" class="ml-4">
+          {% if not strat.bullet_set.all %}
+            <p><small class="text-muted">No description available</small></p>
+          {% endif %}
+          {% for bullet in strat.bullet_set.all %}
+            {% include 'StratBook/_bullet_card_v2.html' %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+      {% for strat in map.t_strategies %}
+      <div class="strat" id="strat-{{strat.id}}">
+        <a class="{{strat.team}}-link" href={% url 'StratBook:strat' strat.id %}>
+          <h3 class="mb-4">{{strat.name}}</h3>
+        </a>
+        <div id="bullets-{{strat.id}}" class="ml-4">
+        {% if not strat.bullet_set.all %}
+          <p><small class="text-muted">No description available</small></p>
+        {% endif %}
+        {% for bullet in strat.bullet_set.all %}
+          {% include 'StratBook/_bullet_card_v2.html' %}
+        {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="sticky-top">
+      <h3>Outline</h3> 
+      <hr>
+      <div class="custom-control custom-checkbox mb-4">
+        <input id="egoCheck" type="checkbox" class="custom-control-input">
+        <label class="custom-control-label" for="egoCheck">Ego Mode</label>
+      </div>
+      
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="card-title">CT Strategies</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+          {% if not map.ct_strategies %}
+            <p><small class="text-muted">No CT Strategies available</small></p>
+          {% else %}
+            {% for strat in map.ct_strategies %}
+              <a class="{{strat.team}}-link" href="#strat-{{strat.id}}">{{strat.name}}</a>
+            {% endfor %}
+          {% endif %}
+          </p>
+        </div>
+      </div>
+      
+      <div class="card mt-4">
+        <div class="card-header bg-danger text-white">
+          <h5 class="card-title">T Strategies</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+          {% if not map.t_strategies %}
+            <p><small class="text-muted">No T Strategies available</small></p>
+          {% else %}
+            {% for strat in map.t_strategies %}
+              {% if not forloop.first %}
+                <hr>
+              {% endif %}
+              <a class="{{strat.team}}-link" href="#strat-{{strat.id}}">{{strat.name}}</a>
+            {% endfor %}
+          {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+      {% if perms.StratBook.add_strategy %}
+        <div class="col">
+          <a href={% url 'StratBook:add_strat' map.id %} class="btn-block btn-lg mt-4 mb-4 btn-success">
+            <div class="ml-2">+ Add Strategy</div>
+          </a>
+        </div>
+        {% endif %}
+        {% if perms.StratBook.delete_map %}
+        <div class="col">
+          <a href={% url 'StratBook:delete_map' map.id %} 
+                 class="btn-block btn-lg mt-4 mb-4 btn-danger">
+            <div class="ml-2">- Delete Map</div>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

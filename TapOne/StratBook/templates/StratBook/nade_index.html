@@ -14,23 +14,24 @@
     {% if map_list %}
       <div class="row mb-4">
       {% for map in map_list %}
-      {% if forloop.counter|divisibleby:5 %}
-        <div class="row mb-4">
-      {% endif %}
-    	    <div class="col-sm-3">
-	          <a class="card-link" href={% url 'StratBook:nadeMap' map.id %}>
-	      	    <div class="card">
+    	  <div class="col-sm-3">
+	        <a class="card-link" href={% url 'StratBook:nadeMap' map.id %}>
+	    	    <div class="card">
+              {% if map.img %}
                 <img src={{ map.img.url }} class="card-img-top">
-	      		    <div class="card-body">
-	      			    <p class="card-text">{{ map.name }}</p>
-	      		    </div>
-	      	    </div>
-	    	    </a>
-	        </div>
-        {% if forloop.counter|divisibleby:4 or forloop.last %}
-        </div>
-        {% endif %}
+              {% endif %}
+	      		  <div class="card-body">
+	      			  <p class="card-text">{{ map.name }}</p>
+	      		  </div>
+	      	  </div>
+	    	  </a>
+	      </div>
+      {% if forloop.counter|divisibleby:4 %}
+      </div>
+      <div class="row mb-4">
+      {% endif %}
       {% endfor %}
+      </div>
     {% else %}
       <p>No active maps available.</p>
     {% endif %}
@@ -41,23 +42,24 @@
       {% if inactive_map_list %}
         <div class="row mb-4">
         {% for map in inactive_map_list %}
-        {% if forloop.counter|divisibleby:5 %}
+      	  <div class="col-sm-3">
+  	        <a class="card-link" href={% url 'StratBook:nadeMap' map.id %}>
+  	          <div class="card">
+                {% if map.img %}
+                  <img src={{ map.img.url }} class="card-img-top">
+                {% endif %}
+  	      		  <div class="card-body">
+  	      			  <p class="card-text">{{ map.name }}</p>
+  	      		  </div>
+  	      	  </div>
+  	    	  </a>
+  	      </div>
+        {% if forloop.counter|divisibleby:4 %}
+          </div>
           <div class="row mb-4">
         {% endif %}
-      	    <div class="col-sm-3">
-  	          <a class="card-link" href={% url 'StratBook:nadeMap' map.id %}>
-  	      	    <div class="card">
-                  <img src={{ map.img.url }} class="card-img-top">
-  	      		    <div class="card-body">
-  	      			    <p class="card-text">{{ map.name }}</p>
-  	      		    </div>
-  	      	    </div>
-  	    	    </a>
-  	        </div>
-          {% if forloop.counter|divisibleby:4 or forloop.last %}
-          </div>
-          {% endif %}
         {% endfor %}
+        </div>
       {% else %}
         <p>No Inactive maps available.</p>
       {% endif %}

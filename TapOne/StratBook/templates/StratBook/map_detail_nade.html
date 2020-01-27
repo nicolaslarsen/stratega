@@ -11,16 +11,15 @@
 <hr>
 <div class="row mb-4">
   {% for nade in map.smokes %}
-  {% if forloop.counter|divisibleby:5 %}
-    <div class="row mb-4">
-  {% endif %}
       <div class="col-sm-3">
         {% include 'StratBook/_nade_card.html' %}
       </div>
-  {% if forloop.counter|divisibleby:4 or forloop.last %}
+  {% if forloop.counter|divisibleby:4 %}
     </div>
+    <div class="row mb-4">
   {% endif %}
   {% endfor %}
+  </div>
 {% endif %}
 
 {% if map.molotovs %}
@@ -28,16 +27,15 @@
 <hr>
 <div class="row mb-4">
   {% for nade in map.molotovs %}
-  {% if forloop.counter|divisibleby:5 %}
-    <div class="row mb-4">
-  {% endif %}
       <div class="col-sm-3">
         {% include 'StratBook/_nade_card.html' %}
       </div>
-  {% if forloop.counter|divisibleby:4 or forloop.last %}
+  {% if forloop.counter|divisibleby:4 %}
     </div>
+    <div class="row mb-4">
   {% endif %}
   {% endfor %}
+  </div>
 {% endif %}
 
 {% if map.flashes %}
@@ -45,16 +43,15 @@
 <hr>
 <div class="row mb-4">
   {% for nade in map.flashes %}
-  {% if forloop.counter|divisibleby:5 %}
-    <div class="row mb-4">
-  {% endif %}
       <div class="col-sm-3">
         {% include 'StratBook/_nade_card.html' %}
       </div>
-  {% if forloop.counter|divisibleby:4 or forloop.last %}
+  {% if forloop.counter|divisibleby:4 %}
     </div>
+    <div class="row mb-4">
   {% endif %}
   {% endfor %}
+  </div>
 {% endif %}
 
 {% if map.HEs %}
@@ -62,16 +59,15 @@
 <hr>
 <div class="row mb-4">
   {% for nade in map.HEs %}
-  {% if forloop.counter|divisibleby:5 %}
+    <div class="col-sm-3">
+      {% include 'StratBook/_nade_card.html' %}
+    </div>
+  {% if forloop.counter|divisibleby:4 %}
+    </div>
     <div class="row mb-4">
   {% endif %}
-      <div class="col-sm-3">
-        {% include 'StratBook/_nade_card.html' %}
-      </div>
-  {% if forloop.counter|divisibleby:4 or forloop.last %}
-    </div>
-  {% endif %}
   {% endfor %}
+  </div>
 {% endif %}
 
 <div class="row mb-4">

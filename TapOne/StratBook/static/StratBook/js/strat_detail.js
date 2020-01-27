@@ -9,4 +9,8 @@ $(document).ready(function(){
     }
     $(".show").removeClass('show');
   });
+
+  $(".card-link").click(function(){
+    $(this).find("span").toggleClass("fa-angle-down fa-angle-up");
+  });
 });

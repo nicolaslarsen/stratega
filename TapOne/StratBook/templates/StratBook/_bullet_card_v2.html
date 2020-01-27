@@ -1,29 +1,29 @@
-<div class="row
+<div class="
       {% if bullet.player == user %} 
       ego
       {% else %}
       selfless
       {% endif %}
-        ">
-  <div class="col-md-6">
-    <div class="card mt-2">
-      <a class="card-link" data-toggle="collapse" data-target="#collapse-{{bullet.id}}"
+      ">
+
+  <a class="card-link" data-toggle="collapse" data-target="#collapse-{{bullet.id}}"
               aria-expanded="false" aria-controls="collapse-{{bullet.id}}">
-        <div class="card-header bg-white" id="heading-{{bullet.id}}">
-          <h5>{{bullet.replace_player_text}}
-            <span class="fas fa-angle-down float-right"></span>
-          </h5>
-        </div>
-      </a>
+    <div id="heading-{{bullet.id}}">
+      {{bullet.replace_player_text}}
+      {% if bullet.nade %}
+        <span class="fas fa-angle-down float-right"></span>
+      {% endif %}
     </div>
-  </div>
+    <hr>
+  </a>
 </div>
+
 <div id="collapse-{{bullet.id}}" 
      class="collapse" 
      aria-labelledby="heading-{{bullet.id}}"
-        data-parent="#bullets">
+      data-parent="#bullets-{{strat.id}}">
   {% if bullet.nade %}
-    <div class="row mb-4 mt-4">
+    <div class="row">
       <div class="col-md-9">
         <div id="carousel-{{bullet.id}}" class="carousel slide" data-interval="false">
           <div class="carousel-inner">
@@ -72,8 +72,9 @@
       </div>
     </div>
   {% else %}
-    <div class="ml-2">
+    <div class="ml-4">
       <small class="text-muted">No nades to show</small>
     </div>
   {% endif %}
+  <hr>
 </div>

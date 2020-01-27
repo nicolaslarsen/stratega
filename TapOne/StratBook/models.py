@@ -16,17 +16,17 @@ class Map(models.Model):
         return self.name
 
     def ct_strategies(self):
-        return self.strategy_set.order_by('name').filter(team='CT')
+        return self.strategy_set.order_by('name').filter(team='CT').order_by('name')
     def t_strategies(self):
-        return self.strategy_set.order_by('name').filter(team='T')
+        return self.strategy_set.order_by('name').filter(team='T').order_by('name')
     def smokes(self):
-        return self.nade_set.filter(nade_type='S')
+        return self.nade_set.filter(nade_type='S').order_by('name')
     def molotovs(self):
-        return self.nade_set.filter(nade_type='M')
+        return self.nade_set.filter(nade_type='M').order_by('name')
     def flashes(self):
-        return self.nade_set.filter(nade_type='F')
+        return self.nade_set.filter(nade_type='F').order_by('name')
     def HEs(self):
-        return self.nade_set.filter(nade_type='H')
+        return self.nade_set.filter(nade_type='H').order_by('name')
 
 class Strategy(models.Model):
     TEAM_CHOICES = [
@@ -105,8 +105,10 @@ class Bullet(models.Model):
             on_delete=models.SET_NULL, blank=True, null=True)
     nade = models.ForeignKey(Nade, on_delete=models.SET_NULL, blank=True, null=True)
 
-    def delete_if_null(self):
-        if (not self.text and not self.nade and not self.player):
+    def delete_if_empty(self):
+        text = self.text.strip()
+        if ((text == '@player' or not text)
+                and not self.nade and not self.player):
             self.delete()
 
     def replace_player_text(self):

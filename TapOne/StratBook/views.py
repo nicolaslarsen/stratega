@@ -30,7 +30,7 @@ class IndexView(generic.ListView):
 @method_decorator(permission_required('StratBook.view_map', raise_exception=True), name ='dispatch')
 class MapDetailView(generic.DetailView):
     model = Map
-    template_name = 'StratBook/map_detail.html'
+    template_name = 'StratBook/map_detail_v2.html'
     context_object_name = 'map'
 
 @method_decorator(login_required, name='dispatch')
@@ -93,6 +93,8 @@ def create_strat_view(request, pk):
             if formset.is_valid():
                 created_strat.save()
                 formset.save()
+                for bullet in created_strat.bullet_set.all():
+                    bullet.delete_if_empty()
                 return HttpResponseRedirect(reverse('StratBook:strat', args=(created_strat.id,)))
     else:
         strat_form = StratForm()
@@ -103,6 +105,7 @@ def create_strat_view(request, pk):
             form.fields['nade'].queryset = Nade.objects.filter(map_name = _map)
 
             form.fields['text'].widget.attrs.update({'class':'form-control'})
+            form.initial['text'] = '@player '
             form.fields['player'].widget.attrs.update({'class':'form-control'})
             form.fields['nade'].widget.attrs.update({'class':'form-control'})
 
@@ -144,7 +147,7 @@ def update_strat_view(request, pk):
                 formset.save()
                 # a little bit sketchy way to delete empty forms
                 for bullet in strat.bullet_set.all():
-                    bullet.delete_if_null()
+                    bullet.delete_if_empty()
                 return HttpResponseRedirect(reverse('StratBook:strat', args=(strat.id,)))
     else:
         for form in formset:
@@ -152,6 +155,7 @@ def update_strat_view(request, pk):
                     groups__name__in=['Member','Admin']).distinct()
             form.fields['nade'].queryset = Nade.objects.filter(map_name=strat.map_name)
             form.fields['text'].widget.attrs.update({'class':'form-control'})
+            form.initial['text'] = '@player '
             form.fields['player'].widget.attrs.update({'class':'form-control'})
             form.fields['nade'].widget.attrs.update({'class':'form-control'})
 
@@ -220,7 +224,13 @@ class NadeDeleteView(generic.DeleteView):
     model = Nade
     template_name = 'StratBook/nade_delete.html'
     context_object_name = 'nade'
-    success_url = 'stratbook/nadebook/'
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        _map = self.object.map_name
+        self.object.delete()
+        return HttpResponseRedirect(reverse('StratBook:nadeMap', args=(_map.id,)))
+        
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(permission_required('StratBook.change_nade', raise_exception=True), name ='dispatch')

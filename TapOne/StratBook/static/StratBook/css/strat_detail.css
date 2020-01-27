@@ -2,3 +2,21 @@ img.d-block.w-100{
   width: 100%;
   max-height: 720px;
 }
+
+div.card-header.bg-white > h5{
+  cursor: default;
+}
+
+a.t-link {
+  color: red;
+}
+
+a.t-link:hover {
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.card-header{
+  padding: .4rem 1rem;
+}

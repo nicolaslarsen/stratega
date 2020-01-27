@@ -72,6 +72,9 @@
             <p><small class="text-muted">No CT Strategies available</small></p>
           {% else %}
             {% for strat in map.ct_strategies %}
+              {% if not forloop.first %}
+                <hr>
+              {% endif %}
               <a class="{{strat.team}}-link" href="#strat-{{strat.id}}">{{strat.name}}</a>
             {% endfor %}
           {% endif %}

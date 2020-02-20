@@ -42,17 +42,17 @@
         </p>
       </div>
     </div>
+    {% if perms.StratBook.change_strategy %}
+      <a class="btn btn-primary mb-4 mt-4" href={% url 'StratBook:update_strat' strat.id %}>Edit</a>
+    {% endif %}
+    {% if perms.StratBook.delete_strategy %}
+      <a class="btn btn-danger mb-4 mt-4" href={% url 'StratBook:delete_strat' strat.id %}>Delete</a>
+    {% endif %}
   </div>
   <div class="col-3 mt-4 bg-light">
     {% include 'StratBook/_detail_sidebar.html' %}
   </div>
 </div>
 
-{% if perms.StratBook.change_strategy %}
-    <a class="btn btn-primary mb-4 mt-4" href={% url 'StratBook:update_strat' strat.id %}>Edit</a>
-{% endif %}
-{% if perms.StratBook.delete_strategy %}
-    <a class="btn btn-danger mb-4 mt-4" href={% url 'StratBook:delete_strat' strat.id %}>Delete</a>
-{% endif %}
 <script src={% static 'StratBook/js/strat_detail.js' %}></script>
 {% endblock %}

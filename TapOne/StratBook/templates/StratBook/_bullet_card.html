@@ -5,13 +5,15 @@
       selfless
       {% endif %}
         ">
-  <div class="col-md-6">
+  <div class="col">
     <div class="card mt-2">
       <a class="card-link" data-toggle="collapse" data-target="#collapse-{{bullet.id}}"
               aria-expanded="false" aria-controls="collapse-{{bullet.id}}">
         <div class="card-header bg-white" id="heading-{{bullet.id}}">
           <h5>{{bullet.replace_player_text}}
+            {% if bullet.nade %}
             <span class="fas fa-angle-down float-right"></span>
+            {% endif %}
           </h5>
         </div>
       </a>
@@ -24,7 +26,7 @@
         data-parent="#bullets">
   {% if bullet.nade %}
     <div class="row mb-4 mt-4">
-      <div class="col-md-9">
+      <div class="col-lg-9">
         <div id="carousel-{{bullet.id}}" class="carousel slide" data-interval="false">
           <div class="carousel-inner">
             <div class="carousel-item active">
@@ -52,7 +54,7 @@
             {% endif %}
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-3">
         <div class="card bg-secondary text-light">
           <div class="card-header bg-dark">
             <h5>{{bullet.nade.name}}</h5>

@@ -50,7 +50,13 @@
             <hr>
             <p><small class="text-muted">Included in:</small></p>
             {% for bullet in nade.bullet_set.all %}
-            <a class="btn btn-outline-dark" href={% url 'StratBook:strat' bullet.strategy.id %}>
+            <a class="btn 
+                    {% if bullet.strategy.team == 'T' %}
+                      btn-outline-danger
+                    {% else %}
+                      btn-outline-primary
+                    {% endif %}
+                    " href={% url 'StratBook:strat' bullet.strategy.id %}>
                     {{bullet.strategy}}
             </a>
             {% endfor %}

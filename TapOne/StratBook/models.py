@@ -120,3 +120,8 @@ class Bullet(models.Model):
             return self.text.replace("@player", name)
         else:
             return self.text
+
+class PlayerOrdering(models.Model):
+    number = models.IntegerField()
+    player = models.OneToOneField(get_user_model(),
+            on_delete=models.SET_NULL, blank=True, null=True)

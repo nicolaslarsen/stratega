@@ -101,7 +101,7 @@ def create_strat_view(request, pk):
         formset = BulletInlineFormSet()
         for form in formset:
             form.fields['player'].queryset = User.objects.filter(
-                    groups__name__in=['Member','Admin']).distinct()
+                    groups__name__in=['Member','Admin']).distinct().order_by('playerordering__number')
             form.fields['nade'].queryset = Nade.objects.filter(map_name = _map)
 
             form.fields['text'].widget.attrs.update({'class':'form-control'})
@@ -152,10 +152,9 @@ def update_strat_view(request, pk):
     else:
         for form in formset:
             form.fields['player'].queryset = User.objects.filter(
-                    groups__name__in=['Member','Admin']).distinct()
+                    groups__name__in=['Member','Admin']).distinct().order_by('playerordering__number')
             form.fields['nade'].queryset = Nade.objects.filter(map_name=strat.map_name)
             form.fields['text'].widget.attrs.update({'class':'form-control'})
-            form.initial['text'] = '@player '
             form.fields['player'].widget.attrs.update({'class':'form-control'})
             form.fields['nade'].widget.attrs.update({'class':'form-control'})
 

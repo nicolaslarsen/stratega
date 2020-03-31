@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from itertools import chain
 import re
 
 def map_directory_path(instance, filename):
@@ -45,6 +46,19 @@ class Strategy(models.Model):
         for (t, name) in self.TEAM_CHOICES:
             if self.team == t:
                 return name
+
+    def swap_bullets(self, player1, player2):
+        print(player1)
+        print(player2)
+        p1_bullets = list(player1.bullet_set.filter(strategy_id=self.id))
+        p2_bullets = list(player2.bullet_set.filter(strategy_id=self.id))
+        print(str(p1_bullets) + " | " + str(p2_bullets))
+        for bullet in p1_bullets:
+            bullet.player = player2
+            bullet.save()
+        for bullet in p2_bullets:
+            bullet.player = player1
+            bullet.save()
 
 def nade_directory_path(instance, filename):
     return 'nades/{0}_{1}'.format(instance.map_name.id, filename)
@@ -114,14 +128,12 @@ class Bullet(models.Model):
     def replace_player_text(self):
         if self.player:
             name = self.player.username
-            #if self.player.first_name:
-            #    name = self.player.first_name
 
             return self.text.replace("@player", name)
         else:
             return self.text
 
 class PlayerOrdering(models.Model):
-    number = models.IntegerField()
+    number = models.IntegerField(blank=True, null=True)
     player = models.OneToOneField(get_user_model(),
             on_delete=models.SET_NULL, blank=True, null=True)

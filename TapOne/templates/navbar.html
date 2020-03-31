@@ -19,6 +19,11 @@
           <li class="nav-item">
             <div class="welcomer"> Welcome {{user.username}}</div>
           </li>
+          {% if perms.AdminPage.view_admin %}
+            <li class="nav-item">
+              <a class="nav-link" href={% url 'AdminPage:index' %}>Admin</a>
+            </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href={% url 'password_change' %}>Change Password</a>
           </li>

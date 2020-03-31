@@ -23,6 +23,7 @@ urlpatterns = [
     path('stratbook/', include('StratBook.urls')),
     path('register/', views.signup, name='signup'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('adminpage/', include('AdminPage.urls')),
     path('admin/', admin.site.urls),
     ]
 urlpatterns += staticfiles_urlpatterns()

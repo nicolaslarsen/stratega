@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['192.168.0.107', '.tapone.ga', 'localhost']
 
 INSTALLED_APPS = [
     'StratBook.apps.StratbookConfig',
+    'AdminPage.apps.AdminpageConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,6 +67,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            ],
+            'builtins' : [
+                'AdminPage.templatetags.adminmodule',
             ],
         },
     },

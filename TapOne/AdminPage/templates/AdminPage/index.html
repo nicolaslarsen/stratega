@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Page{% endblock %}
+{% load adminmodule %}
+{% load static %}
+
+{% block content %}
+<div class="card">
+  <h3 class="card-header bg-secondary text-light">Users</h3>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">User</th>
+          <th scope="col">Firstname</th>
+          <th scope="col">Lastname</th>
+          <th scope="col">Ordering</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% include 'AdminPage/_users.html' %}
+      </tbody>
+    </table>
+    {% include 'AdminPage/_swap_panel.html' %}
+    <script src={% static 'AdminPage/js/adminPage.js' %}></script>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+<a href="#" class="btn btn-lg btn-primary" 
+            data-toggle="modal" data-target="#swap-panel">Swap strategy bullets
+            <i class="fas fa-users-cog"></i>
+</a>
+
+<div class="modal fade" id="swap-panel" tabindex="-1"
+        role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Swap strategy bullets</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action={% url 'AdminPage:swap_strategies' %}>
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Player 1</label>
+            <select class="form-control" name="swapPlayer1">
+              <option value="" selected>--------</option>
+              {% for player in players %}
+                <option value="{{player.id}}">{{player.username}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Player 2</label>
+            <select class="form-control" name="swapPlayer2">
+              <option value="" selected>--------</option>
+              {% for player in players %}
+                <option value="{{player.id}}">{{player.username}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Swap strategy bullets for:</label>
+            <select class="form-control" name="maps">
+              <option value="all" selected>All Maps</option>
+              {% for map in maps %}
+                <option value="{{map.id}}">{{map.name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-primary btn-lg btn-block" value="Swap bullets"></input>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

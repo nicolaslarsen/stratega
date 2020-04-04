@@ -7,6 +7,8 @@
 {% block content %}
   {% include 'StratBook/_mini_nav.html' %}
   <hr>
+  <h2>Edit {{strat.map_name}} Strategy</h2>
+  <hr>
   <form method="post">
     {% csrf_token %}
     {{ form.map_name }}
@@ -14,8 +16,11 @@
       <div class="col-sm-6">
         {{ form.name|as_crispy_field }}
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-2">
         {{ form.team|as_crispy_field }}
+      </div>
+      <div class="col-sm-2">
+        {{ form.category|as_crispy_field }}
       </div>
     </div>
     <div class="card mt-4 bg-light">

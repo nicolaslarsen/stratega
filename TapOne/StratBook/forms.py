@@ -1,6 +1,6 @@
 from django import forms
 from django.forms.models import inlineformset_factory
-from .models import Map, Strategy, Nade, Bullet
+from .models import Map, Strategy, Nade, Bullet, Category
 
 class MapForm(forms.ModelForm):
     name = forms.CharField(max_length=50)
@@ -15,13 +15,15 @@ class StratForm(forms.ModelForm):
     map_name = forms.ModelChoiceField(queryset=Map.objects.all(), required=False, widget=forms.HiddenInput())
     name = forms.CharField(max_length=200)
     team = forms.ChoiceField(choices=Strategy.TEAM_CHOICES)
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
 
     name.widget.attrs.update({'class': 'form-control'})
     team.widget.attrs.update({'class': 'form-control'})
+    category.widget.attrs.update({'class': 'form-control'})
 
     class Meta:
         model = Strategy
-        fields = ('map_name', 'name', 'team')
+        fields = ('map_name', 'name', 'team', 'category')
 
 class NadeForm(forms.ModelForm):
     map_name = forms.ModelChoiceField(queryset=Map.objects.all(), required=False, widget=forms.HiddenInput())
@@ -37,3 +39,11 @@ class NadeForm(forms.ModelForm):
         model = Nade
         fields = ('map_name', 'name', 'description', 'nade_type',
             'setup_img', 'setup_img_link', 'img', 'img_link')
+
+class CategoryForm(forms.ModelForm):
+    name = forms.CharField(max_length=200)
+    ordering = forms.IntegerField(required=False)
+
+    class Meta:
+        model = Category
+        fields = ('name', 'ordering')

@@ -18,4 +18,7 @@ urlpatterns = [
     path('strat/<int:pk>/', views.StrategyDetailView.as_view(), name="strat"),
     path('strat/<int:pk>/edit/', views.update_strat_view, name="update_strat"),
     path('strat/<int:pk>/delete/', views.DeleteStrat.as_view(), name="delete_strat"),
+    path('category/add/', views.CreateCategoryView.as_view(), name="add_category"),
+    path('category/delete/', views.DeleteCategories, name="delete_categories"),
+    path('category/<int:pk>/edit/', views.UpdateCategoryView.as_view(), name="update_category"),
 ]

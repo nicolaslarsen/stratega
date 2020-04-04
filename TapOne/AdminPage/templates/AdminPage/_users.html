@@ -22,7 +22,6 @@
         </button>
       </div>
       <form method="post" action={% url 'AdminPage:update_user' player.id %}>
-        {% csrf_token %}
         <div class="modal-body">
           <div class="form-group">
             <label>Username</label>
@@ -58,6 +57,7 @@
         <div class="modal-footer">
             <input type="submit" class="btn btn-primary btn-lg btn-block" value="Save changes"></input>
         </div>
+        {% csrf_token %}
       </form>
     </div>
   </div>

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Map, Strategy, Nade, Bullet, PlayerOrdering
+from .models import Map, Strategy, Nade, Bullet, PlayerOrdering, Category
 
 class MapAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -39,8 +39,12 @@ class BulletAdmin(admin.ModelAdmin):
 class PlayerOrderingAdmin(admin.ModelAdmin):
     list_display = ['player']
 
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'ordering']
+
 admin.site.register(Map, MapAdmin)
 admin.site.register(Strategy, StrategyAdmin)
 admin.site.register(Nade, NadeAdmin)
 admin.site.register(Bullet, BulletAdmin)
 admin.site.register(PlayerOrdering, PlayerOrderingAdmin)
+admin.site.register(Category, CategoryAdmin)

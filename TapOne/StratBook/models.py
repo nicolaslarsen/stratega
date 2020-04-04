@@ -17,9 +17,9 @@ class Map(models.Model):
         return self.name
 
     def ct_strategies(self):
-        return self.strategy_set.order_by('name').filter(team='CT').order_by('name')
+        return self.strategy_set.filter(team='CT').order_by(models.F('category__ordering').asc(nulls_last=True), 'name')
     def t_strategies(self):
-        return self.strategy_set.order_by('name').filter(team='T').order_by('name')
+        return self.strategy_set.filter(team='T').order_by(models.F('category__ordering').asc(nulls_last=True), 'name')
     def smokes(self):
         return self.nade_set.filter(nade_type='S').order_by('name')
     def molotovs(self):
@@ -28,6 +28,14 @@ class Map(models.Model):
         return self.nade_set.filter(nade_type='F').order_by('name')
     def HEs(self):
         return self.nade_set.filter(nade_type='H').order_by('name')
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    ordering = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 class Strategy(models.Model):
     TEAM_CHOICES = [
@@ -38,6 +46,7 @@ class Strategy(models.Model):
     name = models.CharField(max_length=200)
     team = models.CharField(max_length=2, choices=TEAM_CHOICES)
     added_date = models.DateTimeField('date added', default=timezone.now)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
@@ -48,11 +57,8 @@ class Strategy(models.Model):
                 return name
 
     def swap_bullets(self, player1, player2):
-        print(player1)
-        print(player2)
         p1_bullets = list(player1.bullet_set.filter(strategy_id=self.id))
         p2_bullets = list(player2.bullet_set.filter(strategy_id=self.id))
-        print(str(p1_bullets) + " | " + str(p2_bullets))
         for bullet in p1_bullets:
             bullet.player = player2
             bullet.save()

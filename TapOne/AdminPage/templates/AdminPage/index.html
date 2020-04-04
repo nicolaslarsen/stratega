@@ -23,7 +23,38 @@
       </tbody>
     </table>
     {% include 'AdminPage/_swap_panel.html' %}
-    <script src={% static 'AdminPage/js/adminPage.js' %}></script>
   </div>
 </div>
+<div class="card mt-4">
+  <h3 class="card-header bg-secondary text-light">Users</h3>
+  <div class="card-body">
+    <form method="post" id="delete-categories" action={% url 'StratBook:delete_categories' %}>
+      {% csrf_token %}
+    </form>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Name</th>
+          <th scope="col">Ordering</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% include 'AdminPage/_categories.html' %}
+      </tbody>
+    </table>
+    <a href="#" class="btn btn-lg btn-success" 
+          data-toggle="modal" data-target="#add-category-panel">
+          <i class="fas fa-pen"></i> Create new category
+    </a>
+    <button type="submit" class="btn btn-lg btn-danger ml-4" form="delete-categories"
+            onclick="return confirm('Are you sure you want to delete the marked categories?')">
+        <i class="fas fa-trash"></i> Delete marked categories
+    </button>
+    {% csrf_token %}
+    {% include 'AdminPage/_add_category_panel.html' %}
+  </div>
+</div>
+<script src={% static 'AdminPage/js/adminPage.js' %}></script>
 {% endblock %}

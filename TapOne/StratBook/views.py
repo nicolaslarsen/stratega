@@ -2,15 +2,16 @@ from django.views import generic
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django import template
-from .forms import MapForm, StratForm, NadeForm
+from .forms import MapForm, StratForm, NadeForm, CategoryForm
 from django.urls import reverse
 from django.forms.models import inlineformset_factory
 
 from django.db.models import Q, F
-from .models import Map, Strategy, Nade, Bullet
+from .models import Map, Strategy, Nade, Bullet, Category
 
 # Create your views here.
 @method_decorator(login_required, name='dispatch')
@@ -79,6 +80,7 @@ class CreateStratView(generic.FormView):
 
 @login_required
 @permission_required('StratBook.add_strategy', raise_exception=True)
+@permission_required('StratBook.add_category', raise_exception=True)
 def create_strat_view(request, pk):
     BulletInlineFormSet = inlineformset_factory(Strategy, Bullet,
             fields=('text', 'player', 'nade'), extra=2)
@@ -126,6 +128,7 @@ class UpdateStrat(generic.UpdateView):
 
 @login_required
 @permission_required('StratBook.change_strategy', raise_exception=True)
+@permission_required('StratBook.change_category', raise_exception=True)
 def update_strat_view(request, pk):
     strat = get_object_or_404(Strategy, pk=pk)
 
@@ -242,3 +245,32 @@ class NadeUpdateView(generic.UpdateView):
     def get_success_url(self):
         return reverse('StratBook:nade', args=([self.object.id]))
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(permission_required('StratBook.add_category', raise_exception=True), name ='dispatch')
+class CreateCategoryView(generic.FormView):
+    form_class = CategoryForm
+    template_name = 'StratBook/category_add.html'
+    success_url = '/adminpage/'
+
+    def form_valid(self, form):
+        category = form.save()
+        return HttpResponseRedirect(reverse('AdminPage:index'))
+
+@login_required
+@permission_required('StratBook.delete_category', raise_exception=True)
+def DeleteCategories(request):
+    if (request.POST):
+        deletes = request.POST.getlist('delete')
+        Category.objects.filter(pk__in=deletes).delete()
+        messages.success(request, f"Successfully deleted {len(deletes)} categories")
+
+    return HttpResponseRedirect(reverse('AdminPage:index'))
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(permission_required('StratBook.change_category', raise_exception=True), name ='dispatch')
+class UpdateCategoryView(generic.UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'StratBook/category_edit.html'
+    context_object_name = 'category'
+    success_url = '/adminpage/'

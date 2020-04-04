@@ -1,6 +1,6 @@
 <a href="#" class="btn btn-lg btn-primary" 
-            data-toggle="modal" data-target="#swap-panel">Swap strategy bullets
-            <i class="fas fa-users-cog"></i>
+            data-toggle="modal" data-target="#swap-panel">
+            <i class="fas fa-users-cog"></i> Swap strategy bullets
 </a>
 
 <div class="modal fade" id="swap-panel" tabindex="-1"
@@ -14,7 +14,6 @@
         </button>
       </div>
       <form method="post" action={% url 'AdminPage:swap_strategies' %}>
-        {% csrf_token %}
         <div class="modal-body">
           <div class="form-group">
             <label>Player 1</label>
@@ -47,6 +46,7 @@
         <div class="modal-footer">
           <input type="submit" class="btn btn-primary btn-lg btn-block" value="Swap bullets"></input>
         </div>
+        {% csrf_token %}
       </form>
     </div>
   </div>

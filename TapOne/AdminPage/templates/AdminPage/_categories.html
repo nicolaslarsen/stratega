@@ -1,0 +1,45 @@
+{% for category in categories %}
+<tr>
+  <td><input type="checkbox" form="delete-categories" name="delete" value="{{category.id}}"></td>
+  <th scope="row">{{category.name}}</th>
+  <td>{{category.ordering}}</td>
+  <td><a href="#" class="card-link" data-toggle="modal"
+                                    data-target="#modal-{{category.id}}">
+                  <i class="fas fa-cog"></i>
+      </a>
+  </td>
+</tr>
+
+<div class="modal fade" id="modal-{{category.id}}" tabindex="-1"
+        role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{category.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" id="category-{{category.id}}-form" action={% url 'StratBook:update_category' category.id %}>
+      {% csrf_token %}
+      </form>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" form="category-{{category.id}}-form" name="name"
+            class="form-control" value="{{category.name}}">
+        </div>
+        <div class="form-group">
+            <label>Ordering</label>
+            <input type="number" form="category-{{category.id}}-form" name="ordering"
+            class="form-control" value="{{category.ordering}}">
+        </div>
+      </div>
+      <div class="modal-footer">
+          <input type="submit" form="category-{{category.id}}-form" 
+          class="btn btn-primary btn-lg btn-block" value="Save changes"></input>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

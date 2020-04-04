@@ -1,11 +1,13 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.encoding import iri_to_uri
 from django.contrib.auth import get_user_model
 from itertools import chain
 import re
 
 def map_directory_path(instance, filename):
-    return 'maps/{0}_{1}'.format(timezone.now(), filename)
+    iri = 'maps/{0}_{1}'.format(timezone.now(), filename)
+    return iri_to_uri(iri)
 
 # Create your models here.
 class Map(models.Model):
@@ -67,7 +69,8 @@ class Strategy(models.Model):
             bullet.save()
 
 def nade_directory_path(instance, filename):
-    return 'nades/{0}_{1}'.format(instance.map_name.id, filename)
+    iri = 'nades/{0}_{1}'.format(instance.map_name.id, filename)
+    return iri_to_uri(iri)
 
 class Nade(models.Model):
     NADE_TYPE_CHOICES = [

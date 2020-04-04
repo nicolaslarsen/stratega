@@ -3,6 +3,7 @@
 {% block title %}{{map.name}} Nades{% endblock %}
 
 {% block content %}
+{% load static %}
 {% include 'StratBook/_mini_nav_nade.html' %}
 <hr>
 
@@ -81,4 +82,5 @@
 {% endif %}
   </div>
 </div>
+<script src={% static 'StratBook/js/map_detail_nade.js' %}></script>
 {% endblock %}

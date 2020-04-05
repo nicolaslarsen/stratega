@@ -4,13 +4,13 @@
   <th scope="row">{{category.name}}</th>
   <td>{{category.ordering}}</td>
   <td><a href="#" class="card-link" data-toggle="modal"
-                                    data-target="#modal-{{category.id}}">
+                                    data-target="#modal-category-{{category.id}}">
                   <i class="fas fa-cog"></i>
       </a>
   </td>
 </tr>
 
-<div class="modal fade" id="modal-{{category.id}}" tabindex="-1"
+<div class="modal fade" id="modal-category-{{category.id}}" tabindex="-1"
         role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

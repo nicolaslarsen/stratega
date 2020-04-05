@@ -1,5 +1,6 @@
 from django.views import generic
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -80,7 +81,6 @@ class CreateStratView(generic.FormView):
 
 @login_required
 @permission_required('StratBook.add_strategy', raise_exception=True)
-@permission_required('StratBook.add_category', raise_exception=True)
 def create_strat_view(request, pk):
     BulletInlineFormSet = inlineformset_factory(Strategy, Bullet,
             fields=('text', 'player', 'nade'), extra=2)
@@ -128,7 +128,6 @@ class UpdateStrat(generic.UpdateView):
 
 @login_required
 @permission_required('StratBook.change_strategy', raise_exception=True)
-@permission_required('StratBook.change_category', raise_exception=True)
 def update_strat_view(request, pk):
     strat = get_object_or_404(Strategy, pk=pk)
 
@@ -146,6 +145,7 @@ def update_strat_view(request, pk):
             editted_strat = strat_form.save(commit=False)
             formset = BulletInlineFormSet(request.POST, request.FILES, instance=editted_strat)
             if formset.is_valid():
+                editted_strat.updated_date = timezone.now()
                 editted_strat.save()
                 formset.save()
                 # a little bit sketchy way to delete empty forms

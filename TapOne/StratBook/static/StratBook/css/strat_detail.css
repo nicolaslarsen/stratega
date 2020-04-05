@@ -34,3 +34,14 @@ a.t-link:hover {
   overflow-x: hidden;
   max-height: 100vh;
 }
+
+.new{
+  padding: 10px;
+  border: 3px dashed red;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+small.new{
+  border: 1px dashed red;
+}

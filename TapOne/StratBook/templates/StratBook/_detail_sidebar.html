@@ -9,12 +9,20 @@
       <li><hr></li>
       {% for ct_strat in strat.map_name.ct_strategies %}
       <li class="nav-item">
-        <a class="nav-link ct-link" href={% url 'StratBook:strat' ct_strat.id %}>{{ct_strat.name}}</a>
+        <a class="nav-link ct-link" href={% url 'StratBook:strat' ct_strat.id %}>{{ct_strat.name}}
+          {% if ct_strat.is_new %} 
+            <small class="new">new</small>
+          {% endif %}
+        </a>
       </li>
       {% endfor %} 
       {% for t_strat in strat.map_name.t_strategies %}
       <li class="nav-item">
-        <a class="nav-link t-link" href={% url 'StratBook:strat' t_strat.id %}>{{t_strat.name}}</a>
+        <a class="nav-link t-link" href={% url 'StratBook:strat' t_strat.id %}>{{t_strat.name}}
+          {% if t_strat.is_new %} 
+            <small class="new">new</small>
+          {% endif %}
+        </a>
       </li>
       {% endfor %}
     </ul>

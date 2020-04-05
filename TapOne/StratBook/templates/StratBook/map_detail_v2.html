@@ -19,7 +19,7 @@
       {% endif %}
 
       {% for strat in map.ct_strategies %}
-      <div class="strat" id="strat-{{strat.id}}">
+      <div class="strat {{strat.print_if_new}}" id="strat-{{strat.id}}">
         <a class="{{strat.team}}-link" href={% url 'StratBook:strat' strat.id %}>
           <h3 class="mb-4">{{strat.name}}</h3>
         </a>
@@ -35,7 +35,7 @@
       {% endfor %}
 
       {% for strat in map.t_strategies %}
-      <div class="strat" id="strat-{{strat.id}}">
+      <div class="strat {{strat.print_if_new}}" id="strat-{{strat.id}}">
         <a class="{{strat.team}}-link" href={% url 'StratBook:strat' strat.id %}>
           <h3 class="mb-4">{{strat.name}}</h3>
         </a>
@@ -75,7 +75,11 @@
               {% if not forloop.first %}
                 <hr>
               {% endif %}
-              <a class="{{strat.team}}-link" href="#strat-{{strat.id}}">{{strat.name}}</a>
+              <a class="{{strat.team}}-link" href="#strat-{{strat.id}}">{{strat.name}}
+                {% if strat.is_new %}
+                  <small class="new">new</small>
+                {% endif %}
+              </a>
             {% endfor %}
           {% endif %}
           </p>
@@ -95,7 +99,11 @@
               {% if not forloop.first %}
                 <hr>
               {% endif %}
-              <a class="{{strat.team}}-link" href="#strat-{{strat.id}}">{{strat.name}}</a>
+              <a class="{{strat.team}}-link" href="#strat-{{strat.id}}">{{strat.name}}
+                {% if strat.is_new %}
+                  <small class="new">new</small>
+                {% endif %}
+              </a>
             {% endfor %}
           {% endif %}
           </p>

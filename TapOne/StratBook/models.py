@@ -31,7 +31,6 @@ class Map(models.Model):
     def HEs(self):
         return self.nade_set.filter(nade_type='H').order_by('name')
 
-
 class Category(models.Model):
     name = models.CharField(max_length=50)
     ordering = models.IntegerField(blank=True, null=True)
@@ -48,6 +47,7 @@ class Strategy(models.Model):
     name = models.CharField(max_length=200)
     team = models.CharField(max_length=2, choices=TEAM_CHOICES)
     added_date = models.DateTimeField('date added', default=timezone.now)
+    updated_date = models.DateTimeField('date added', default=timezone.now)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
@@ -57,6 +57,14 @@ class Strategy(models.Model):
         for (t, name) in self.TEAM_CHOICES:
             if self.team == t:
                 return name
+
+    def is_new(self):
+        time_between_insertion =  timezone.now() - self.updated_date
+        return time_between_insertion.days < 7
+
+    def print_if_new(self):
+        if self.is_new():
+            return "new"
 
     def swap_bullets(self, player1, player2):
         p1_bullets = list(player1.bullet_set.filter(strategy_id=self.id))

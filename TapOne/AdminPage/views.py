@@ -59,7 +59,7 @@ def UpdateUser(request, pk):
 
     usr.save()
     usr.playerordering.save()
-    messages.success(request, f"User: {usr.username} was updated successfully")
+    messages.success(request, str.format("User: {} was updated successfully", usr.username))
     return HttpResponseRedirect(reverse('AdminPage:index'))
 
 
@@ -86,7 +86,8 @@ def SwapStrategies(request):
             for strat in _map.strategy_set.all():
                 strat.swap_bullets(player1, player2)
         messages.success(request, 
-            f'Succesfully swapped strats between {player1} and {player2} on {mapStrList}')
+            str.format('Succesfully swapped strats between {0} and {1} on {2}', 
+                player1, player2, mapStrList))
     else:
         messages.error(request, 'Can not swap strategies unless two players have been selected')
     return HttpResponseRedirect(reverse('AdminPage:index'))

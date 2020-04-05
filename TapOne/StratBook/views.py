@@ -262,7 +262,7 @@ def DeleteCategories(request):
     if (request.POST):
         deletes = request.POST.getlist('delete')
         Category.objects.filter(pk__in=deletes).delete()
-        messages.success(request, f"Successfully deleted {len(deletes)} categories")
+        messages.success(request, str.format("Successfully deleted {0} categories", len(deletes)))
 
     return HttpResponseRedirect(reverse('AdminPage:index'))
 

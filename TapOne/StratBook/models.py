@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import F
 from django.utils import timezone
 from django.utils.encoding import iri_to_uri
 from django.contrib.auth import get_user_model
@@ -19,9 +20,9 @@ class Map(models.Model):
         return self.name
 
     def ct_strategies(self):
-        return self.strategy_set.filter(team='CT').order_by(models.F('category__ordering').asc(nulls_last=True), 'name')
+        return self.strategy_set.filter(team='CT').order_by(F('category__ordering').asc(nulls_last=True), 'name')
     def t_strategies(self):
-        return self.strategy_set.filter(team='T').order_by(models.F('category__ordering').asc(nulls_last=True), 'name')
+        return self.strategy_set.filter(team='T').order_by(F('category__ordering').asc(nulls_last=True), 'name')
     def smokes(self):
         return self.nade_set.filter(nade_type='S').order_by('name')
     def molotovs(self):
@@ -75,6 +76,9 @@ class Strategy(models.Model):
         for bullet in p2_bullets:
             bullet.player = player1
             bullet.save()
+
+    def bullets(self):
+        return self.bullet_set.order_by(F('player__playerordering__number').asc(nulls_last=True))
 
 def nade_directory_path(instance, filename):
     iri = 'nades/{0}_{1}'.format(instance.map_name.id, filename)

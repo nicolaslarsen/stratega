@@ -30,7 +30,7 @@
                 <small>No description available for this strategy</small>
               </p>
             {% else %}
-              {% for bullet in strat.bullet_set.all %}
+              {% for bullet in strat.bullets %}
                 {% include 'StratBook/_bullet_card.html' %}
               {% endfor %}
             {% endif %}

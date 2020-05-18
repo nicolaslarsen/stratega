@@ -53,7 +53,6 @@ class CreateMapView(generic.FormView):
         _map = form.save()
         return HttpResponseRedirect(reverse('StratBook:index'))
 
-
 @method_decorator(login_required, name='dispatch')
 @method_decorator(permission_required('StratBook.delete_map', raise_exception=True), name ='dispatch')
 class DeleteMapView(generic.DeleteView):

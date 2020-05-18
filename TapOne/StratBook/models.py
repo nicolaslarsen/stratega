@@ -50,6 +50,7 @@ class Strategy(models.Model):
     added_date = models.DateTimeField('date added', default=timezone.now)
     updated_date = models.DateTimeField('date added', default=timezone.now)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+    is_hidden = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

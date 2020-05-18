@@ -16,6 +16,7 @@ class StratForm(forms.ModelForm):
     name = forms.CharField(max_length=200)
     team = forms.ChoiceField(choices=Strategy.TEAM_CHOICES)
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
+    is_hidden = forms.BooleanField(required=False)
 
     name.widget.attrs.update({'class': 'form-control'})
     team.widget.attrs.update({'class': 'form-control'})
@@ -23,7 +24,7 @@ class StratForm(forms.ModelForm):
 
     class Meta:
         model = Strategy
-        fields = ('map_name', 'name', 'team', 'category')
+        fields = ('map_name', 'name', 'team', 'category', 'is_hidden')
 
 class NadeForm(forms.ModelForm):
     map_name = forms.ModelChoiceField(queryset=Map.objects.all(), required=False, widget=forms.HiddenInput())

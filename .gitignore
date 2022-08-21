@@ -7,3 +7,5 @@
 *.pyc
 
 */media/
+
+settings.py

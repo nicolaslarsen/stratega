@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Delete: {{nade.name}}{% endblock %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+  <p>Are you sure you want to delete "{{ nade.name }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete" class="btn btn-danger mt-2"></input>
+    <input type="button" value="No, take me back!" onclick="history.back()"
+    	class="btn btn-outline-primary bg-light mt-2">
+  </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% if perms.AdminPage.can_view_hidden_strats or not strat.is_hidden %}
+<div class="card strat mb-4" id="strat-{{strat.id}}">
+  <a href={% url 'StratBook:strat' strat.id %}>
+    <h3 class="card-header bg-secondary {{strat.team}}-link text-light">{{strat.name}}</h3>
+  </a>
+  <table class="table table-striped mb-0" id="bullets-{{strat.id}}">
+    <tbody>
+      {% if not strat.bullet_set.all %}
+        <tr><th><small class="text-muted">No description available</small></th></tr>
+      {% endif %}
+      {% for bullet in strat.bullets %}
+        {% include 'StratBook/_bullet_card_v2.html' %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}

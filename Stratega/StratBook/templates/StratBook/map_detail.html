@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}{{map.name}} Strats{% endblock %}
+
+{% block content %}
+{% include 'StratBook/_mini_nav.html' %}
+<hr>
+<h2>{{map.name}}</h2>
+<div class="row mb-4 mt-4">
+  <div class="col-6">
+    <div class="card border-primary bg-light">
+      <div class="card-body">
+        <h3 class="card-title text-primary">Counter-Terrorist</h3>
+        <p class="card-text">
+          {% if map.ct_strategies %}
+            {% for strat in map.ct_strategies %}
+            {% if not forloop.counter|divisibleby:2 %}
+              <div class="row mt-2">
+            {% endif %}
+                <div class="col-sm-6">
+                  {% include 'StratBook/_strat_card.html' %}
+                </div>
+            {% if forloop.counter|divisibleby:2 or forloop.last %}
+              </div>
+            {% endif %}
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">
+              <small>No strats available</small>
+            </p>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card border-danger bg-light">
+      <div class="card-body">
+        <h3 class="card-title text-danger">Terrorist</h3>
+        <p class="card-text">
+          {% if map.t_strategies.all %}
+            {% for strat in map.t_strategies %}
+            {% if not forloop.counter|divisibleby:2 %}
+              <div class="row mt-2">
+            {% endif %}
+                <div class="col-sm-6">
+                  {% include 'StratBook/_strat_card.html' %}
+                </div>
+            {% if forloop.counter|divisibleby:2 or forloop.last %}
+              </div>
+            {% endif %}
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">
+              <small>No strats available</small>
+            </p>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="buttons mb-4">
+  {% if perms.StratBook.add_strategy %}
+    <a href={% url 'StratBook:add_strat' map.id %} class="btn btn-success">+ Add Strategy</a>
+  {% endif %}
+  {% if perms.StratBook.delete_map %}
+    <a href={% url 'StratBook:delete_map' map.id %} class="btn btn-danger">- Delete Map</a>
+  {% endif %}
+</div>
+{% endblock %}
+

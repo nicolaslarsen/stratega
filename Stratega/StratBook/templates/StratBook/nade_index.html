@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Map Overview - Nadebook{% endblock %}
+
+{% load static %}
+{% block content %}
+  <div class="custom-control custom-checkbox mb-4">
+    <input type="checkbox" class="custom-control-input" id="activeDutyCheck" checked>
+    <label class="custom-control-label" for="activeDutyCheck">Only show active duty</label>
+  </div>
+  {% if perms.StratBook.view_map %}
+    <h3>Active Maps</h1>
+    <hr>
+    {% if map_list %}
+      <div class="row mb-4">
+      {% for map in map_list %}
+    	  <div class="col-sm-3">
+	        <a class="card-link" href={% url 'StratBook:nadeMap' map.id %}>
+	    	    <div class="card">
+              {% if map.img %}
+                <img src={{ map.img.url }} class="card-img-top">
+              {% endif %}
+	      		  <div class="card-body">
+	      			  <p class="card-text">{{ map.name }}</p>
+	      		  </div>
+	      	  </div>
+	    	  </a>
+	      </div>
+      {% if forloop.counter|divisibleby:4 %}
+      </div>
+      <div class="row mb-4">
+      {% endif %}
+      {% endfor %}
+      </div>
+    {% else %}
+      <p>No active maps available.</p>
+    {% endif %}
+    <div id="inactive_maps" style="display:none">
+      <hr>
+      <h3 class="mt-4">Inactive Maps</h3>
+      <hr>
+      {% if inactive_map_list %}
+        <div class="row mb-4">
+        {% for map in inactive_map_list %}
+      	  <div class="col-sm-3">
+  	        <a class="card-link" href={% url 'StratBook:nadeMap' map.id %}>
+  	          <div class="card">
+                {% if map.img %}
+                  <img src={{ map.img.url }} class="card-img-top">
+                {% endif %}
+  	      		  <div class="card-body">
+  	      			  <p class="card-text">{{ map.name }}</p>
+  	      		  </div>
+  	      	  </div>
+  	    	  </a>
+  	      </div>
+        {% if forloop.counter|divisibleby:4 %}
+          </div>
+          <div class="row mb-4">
+        {% endif %}
+        {% endfor %}
+        </div>
+      {% else %}
+        <p>No Inactive maps available.</p>
+      {% endif %}
+    </div>
+  {% else %}
+    <p>Your user does not have access to any maps</p>
+  {% endif %}
+  {% if perms.StratBook.add_map %}
+    <a href={% url 'StratBook:add_map' %} class="btn btn-success mb-4">+ Add Map</a>
+  {% endif %}
+  <script src={% static 'StratBook/js/index.js' %}>
+  </script>
+{% endblock %}

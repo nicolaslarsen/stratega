@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-sm">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-link">
+            <a class="btn btn-outline-primary btn-light" 
+                    href={% url 'StratBook:index' %}>&laquo Map Overview</a>
+    </li>
+    {% if strat %}
+    <li class="nav-link">
+      <a class="btn btn-outline-primary btn-light" 
+              href={% url 'StratBook:map' strat.map_name.id %}>&laquo; {{strat.map_name.name}}
+      </a>
+    </li>
+    {% elif map %}
+    <li class="nav-link">
+      <a class="btn btn-outline-primary btn-light" 
+              href={% url 'StratBook:map' map.id %}>&laquo; {{map.name}}
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>

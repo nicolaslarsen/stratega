@@ -89,7 +89,7 @@ class Nade(models.Model):
         ('H', 'HE Grenade')
     ]
     name = models.CharField(max_length=50)
-    map_name = models.ForeignKey(Map, on_delete=models.SET_NULL, null=True)
+    map_name = models.ForeignKey(Map, on_delete=models.CASCADE, null=True)
     nade_type = models.CharField(max_length=1, choices=NADE_TYPE_CHOICES)
     description = models.TextField(blank=True)
     setup_img_link = models.URLField(blank=True)

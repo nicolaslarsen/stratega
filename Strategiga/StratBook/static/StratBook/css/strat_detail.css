@@ -16,11 +16,11 @@ div.card-header.bg-white > h5{
 }
 
 *.t-link {
-  color: red;
+  color: #dc3545;
 }
 
 *.t-link:hover {
-  color: red;
+  color: #dc3545;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -30,7 +30,7 @@ h3.ct-link {
 }
   
 h3.t-link {
-  background-color: red !important;
+  background-color: #dc3545 !important;
 }
 
 .card-header{

@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='strategy',
             name='team',
-            field=models.CharField(default='exit', max_length=2),
+            field=models.CharField(default='', max_length=2),
             preserve_default=False,
         ),
     ]

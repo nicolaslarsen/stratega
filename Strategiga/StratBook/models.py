@@ -75,7 +75,16 @@ class Strategy(models.Model):
             bullet.save()
 
     def bullets(self):
-        return self.bullet_set.order_by(F('player__playerordering__number').asc(nulls_last=True))
+        # whether or not there are any bullets with players using orderings
+        sort_by_player_ordering = len([True for bullet
+            in self.bullet_set.all()
+            if bullet.player and bullet.player.playerordering.number is not None]) > 0
+        
+        if (sort_by_player_ordering):
+            return self.bullet_set.order_by(
+                F('player__playerordering__number').asc(nulls_last=True), 'id')
+
+        return self.bullet_set.order_by('id')
 
 def nade_directory_path(instance, filename):
     iri = 'nades/{0}_{1}'.format(instance.map_name.id, filename)

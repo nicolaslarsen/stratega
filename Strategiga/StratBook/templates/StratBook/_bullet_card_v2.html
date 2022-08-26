@@ -1,7 +1,7 @@
 <tr>
   <td>
     <div class="
-      {% if bullet.player == user %} 
+      {% if bullet.player == user or bullet.player is None%} 
       ego
       {% else %}
       selfless
